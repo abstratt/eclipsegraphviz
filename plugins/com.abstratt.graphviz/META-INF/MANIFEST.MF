@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Graphviz Plug-in
+Bundle-SymbolicName: com.abstratt.graphviz;singleton:=true
+Bundle-Version: 1.120.1.qualifier
+Bundle-Vendor: Abstratt Technologies (Eclipse integration)
+Bundle-Activator: com.abstratt.graphviz.GraphVizActivator
+Require-Bundle: org.eclipse.osgi,
+ org.eclipse.core.runtime,
+ org.apache.commons.io,
+ org.eclipse.swt,
+ com.abstratt.pluginutils,
+ org.eclipse.core.filesystem
+Export-Package: com.abstratt.graphviz
+Eclipse-LazyStart: true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy

@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Graphviz DOT Viewer
+Bundle-SymbolicName: com.abstratt.graphviz.ui;singleton:=true
+Bundle-Version: 1.120.1.qualifier
+Bundle-Activator: com.abstratt.graphviz.ui.Activator
+Bundle-Vendor: Abstratt Technologies
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.swt,
+ org.eclipse.core.runtime,
+ com.abstratt.graphviz,
+ org.eclipse.core.resources,
+ org.apache.commons.io,
+ com.abstratt.imageviewer;visibility:=reexport,
+ com.abstratt.pluginutils
+Eclipse-LazyStart: true
+Export-Package: com.abstratt.graphviz.ui
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

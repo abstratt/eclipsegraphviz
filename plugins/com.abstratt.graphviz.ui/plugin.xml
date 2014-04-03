@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="com.abstratt.content.contentProvider">
+      <provider
+            class="com.abstratt.graphviz.ui.DOTGraphicalContentProvider">
+         <association
+               contentType="com.abstratt.graphviz.dot">
+         </association>
+         <reader
+               class="com.abstratt.imageviewer.FileToByteArrayContentReader">
+         </reader>
+      </provider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.abstratt.graphviz.ui.GraphVizPreferencePage"
+            id="com.abstratt.graphviz.ui.GraphVizPreferencePage"
+            name="Graphviz">
+      </page>
+   </extension>
+
+
+</plugin>

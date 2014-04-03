@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.6"?>
+
+<target name="EclipseGraphviz dependencies" sequenceNumber="4">
+<locations>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.platform.feature.group" version="0.0.0"/>
+<unit id="org.apache.commons.lang" version="0.0.0"/>
+<unit id="org.apache.commons.io" version="0.0.0"/>
+<unit id="org.apache.commons.beanutils" version="0.0.0"/>
+<repository location="http://download.eclipse.org/releases/juno/"/>
+</location>
+</locations>
+</target>

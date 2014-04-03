@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Content Plug-in
+Bundle-SymbolicName: com.abstratt.content;singleton:=true
+Bundle-Version: 1.120.1.qualifier
+Bundle-Vendor: Abstratt Technologies
+Require-Bundle: com.abstratt.pluginutils,
+ org.eclipse.core.contenttype,
+ org.eclipse.equinox.registry,
+ org.eclipse.osgi,
+ org.eclipse.jface,
+ org.eclipse.core.runtime,
+ org.apache.commons.beanutils
+Export-Package: com.abstratt.content
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

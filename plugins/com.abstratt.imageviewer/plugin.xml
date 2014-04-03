@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="default"
+         point="com.abstratt.content.contentProvider">
+      <provider
+            class="com.abstratt.imageviewer.DefaultGraphicalContentProvider">
+         <association
+               contentType="com.abstratt.imageviewer.image">
+         </association>
+         <reader
+               class="com.abstratt.imageviewer.FileToByteArrayContentReader">
+         </reader>
+      </provider>
+   </extension>
+   <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            id="com.abstratt.imageviewer.image"
+            name="Image">
+      </content-type>
+      <content-type
+            base-type="com.abstratt.imageviewer.image"
+            file-extensions="gif"
+            id="com.abstratt.imageviewer.gif"
+            name="GIF Image"
+            priority="low">
+      </content-type>
+      <content-type
+            base-type="com.abstratt.imageviewer.image"
+            file-extensions="jpg"
+            id="com.abstratt.imageviewer.jpeg"
+            name="JPEG Image">
+      </content-type>
+      <content-type
+            base-type="com.abstratt.imageviewer.image"
+            file-extensions="png"
+            id="com.abstratt.imageviewer.png"
+            name="Portable Network Graphics Image">
+      </content-type>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="com.abstratt.imageviewer.eclipseGraphviz"
+            class="com.abstratt.imageviewer.GraphicalView"
+            icon="icons/sample.gif"
+            id="com.abstratt.imageviewer.GraphicalView"
+            name="Image Viewer">
+      </view>
+      <category
+            id="com.abstratt.imageviewer.eclipseGraphviz"
+            name="EclipseGraphviz">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.viewActions">
+      <viewContribution
+            id="com.abstratt.imageviewer.graphicalViewActions"
+            targetID="com.abstratt.imageviewer.GraphicalView">
+         <action
+               class="com.abstratt.imageviewer.SaveToFileAction"
+               disabledIcon="icons/dsave_edit.gif"
+               icon="icons/esave_edit.gif"
+               id="com.abstratt.imageviewer.saveFile"
+               label="Save to..."
+               style="push"
+               toolbarPath="file_actions"
+               tooltip="Save this image to a file">
+         </action>
+      </viewContribution>
+   </extension>
+</plugin>

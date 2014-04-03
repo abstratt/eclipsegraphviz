@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.abstratt.eclipsegraphviz</groupId>
+	<artifactId>com.abstratt.eclipsegraphviz.parent</artifactId>
+	<version>1.120.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<parent>
+		<artifactId>master</artifactId>
+		<groupId>com.abstratt</groupId>
+		<version>1.3</version>
+		<relativePath>master</relativePath>
+	</parent>
+
+	<modules>
+		<module>plugins/com.abstratt.pluginutils</module>
+		<module>plugins/com.abstratt.content</module>
+		<module>plugins/com.abstratt.graphviz</module>
+		<module>plugins/com.abstratt.graphviz.ui</module>
+		<module>plugins/com.abstratt.imageviewer</module>
+		<module>features/com.abstratt.eclipsegraphviz.feature</module>
+		<module>repositories/com.abstratt.eclipsegraphviz.repository</module>
+	</modules>
+
+        <build><plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<target>
+						<artifact>
+							<groupId>com.abstratt.eclipsegraphviz</groupId>
+							<artifactId>com.abstratt.eclipsegraphviz.parent</artifactId>
+							<version>1.120.1-SNAPSHOT</version>
+							<classifier>dependencies</classifier>
+						</artifact>
+					</target>
+					<resolver>p2</resolver>
+				</configuration>
+			</plugin>
+         </plugins></build>
+</project>
+

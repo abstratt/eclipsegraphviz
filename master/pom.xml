@@ -7,14 +7,14 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho-version>0.21.0-SNAPSHOT</tycho-version>
+		<tycho-version>0.21.0</tycho-version>
 	</properties>
 
 <pluginRepositories>
-  <pluginRepository>
-    <id>tycho-snapshots</id>
-    <url>https://repo.eclipse.org/content/repositories/tycho-snapshots/</url>
-  </pluginRepository>
+ <pluginRepository>
+  <id>tycho-staged</id>
+  <url>https://oss.sonatype.org/content/repositories/orgeclipsetycho-1018/</url>
+ </pluginRepository>
 </pluginRepositories>
 
 

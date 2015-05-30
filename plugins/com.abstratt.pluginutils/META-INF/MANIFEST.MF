@@ -6,4 +6,4 @@ Bundle-Version: 1.120.1.qualifier
 Bundle-Vendor: Abstratt Technologies
 Require-Bundle: org.eclipse.core.runtime
 Export-Package: com.abstratt.pluginutils
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

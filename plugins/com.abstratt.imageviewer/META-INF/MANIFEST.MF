@@ -18,4 +18,4 @@ Require-Bundle: org.eclipse.core.runtime,
 Import-Package: org.eclipse.core.runtime
 Eclipse-LazyStart: true
 Export-Package: com.abstratt.imageviewer
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

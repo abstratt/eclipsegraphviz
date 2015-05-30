@@ -13,5 +13,5 @@ Require-Bundle: org.eclipse.osgi,
  org.eclipse.core.filesystem
 Export-Package: com.abstratt.graphviz
 Eclipse-LazyStart: true
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

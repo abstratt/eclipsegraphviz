@@ -12,4 +12,4 @@ Require-Bundle: com.abstratt.pluginutils,
  org.eclipse.core.runtime,
  org.apache.commons.beanutils
 Export-Package: com.abstratt.content
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

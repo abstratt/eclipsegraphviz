@@ -15,4 +15,4 @@ Require-Bundle: org.eclipse.ui,
  com.abstratt.pluginutils
 Eclipse-LazyStart: true
 Export-Package: com.abstratt.graphviz.ui
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

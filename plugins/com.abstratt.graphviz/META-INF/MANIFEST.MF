@@ -8,7 +8,6 @@ Bundle-Activator: com.abstratt.graphviz.GraphVizActivator
 Require-Bundle: org.eclipse.osgi,
  org.eclipse.core.runtime,
  org.apache.commons.io,
- org.eclipse.swt;visibility:=reexport,
  com.abstratt.pluginutils,
  org.eclipse.core.filesystem
 Export-Package: com.abstratt.graphviz

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -28,12 +29,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.swt.SWTException;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.ImageLoader;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Display;
 
 import com.abstratt.graphviz.ProcessController.TimeOutException;
 import com.abstratt.pluginutils.LogUtils;
@@ -48,11 +43,6 @@ public class GraphViz {
 	private static final String TMP_FILE_PREFIX = "graphviz"; //$NON-NLS-1$
 
 
-	public static void generate(final InputStream input, String format, Point dimension, IPath outputLocation)
-            throws CoreException {
-	    generate(input, format, dimension.x, dimension.y, outputLocation);
-	}
-	
 	public static void generate(final InputStream input, String format, int dimensionX, int dimensionY, IPath outputLocation)
 					throws CoreException {
 		MultiStatus status = new MultiStatus(GraphVizActivator.ID, 0, "Errors occurred while running Graphviz", null);
@@ -95,7 +85,7 @@ public class GraphViz {
 	 * @throws CoreException
 	 *             if any error occurs
 	 */
-	public static Image load(final InputStream input, String format, Point dimension) throws CoreException {
+	public static byte[] load(final InputStream input, String format, int dimensionX, int dimensionY) throws CoreException {
 		MultiStatus status = new MultiStatus(GraphVizActivator.ID, 0, "Errors occurred while running Graphviz", null);
 		File dotInput = null, dotOutput = null;
 		// we keep the input in memory so we can include it in error messages
@@ -119,20 +109,15 @@ public class GraphViz {
 				IOUtils.closeQuietly(tmpDotOutputStream);
 			}
 
-			IStatus result = runDot(format, dimension, dotInput, dotOutput);
+			IStatus result = runDot(format, dimensionX, dimensionY, dotInput, dotOutput);
 
 			status.add(result);
 			status.add(logInput(dotContents));
 			if (dotOutput.isFile()) {
 				if (!result.isOK() && Platform.inDebugMode())
 					LogUtils.log(status);
-				// try to load the resulting image
-				ImageLoader loader = new ImageLoader();
-				ImageData[] imageData = loader.load(dotOutput.getAbsolutePath());
-				return new Image(Display.getDefault(), imageData[0]);
+				return FileUtils.readFileToByteArray(dotOutput);
 			}
-		} catch (SWTException e) {
-			status.add(new Status(IStatus.ERROR, GraphVizActivator.ID, "", e));
 		} catch (IOException e) {
 			status.add(new Status(IStatus.ERROR, GraphVizActivator.ID, "", e));
 		} finally {
@@ -143,10 +128,6 @@ public class GraphViz {
 		throw new CoreException(status);
 	}
 	
-	public static IStatus runDot(String format, Point dimension, File dotInput, File dotOutput) {
-	    return runDot(format, dimension.x, dimension.y, dotInput, dotOutput);
-	}
-
 	public static IStatus runDot(String format, int dimensionX, int dimensionY, File dotInput, File dotOutput) {
 		// build the command line
 		double dpi = 96;

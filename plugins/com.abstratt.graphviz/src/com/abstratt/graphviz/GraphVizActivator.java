@@ -287,7 +287,9 @@ public class GraphVizActivator implements BundleActivator {
 
 		// then try to find any installed copies of dot
 		autodetectDots();
-		if (autodetectedDotLocation == null && getDotSearchMethod() == DotMethod.DETECT) {
+		if (autodetectedDotLocation != null) {
+		    LogUtils.logInfo(getClass().getPackage().getName(), "Detected dot at " + autodetectedDotLocation, null);
+		} else if (getDotSearchMethod() == DotMethod.DETECT) {
 			setDotSearchMethod(DotMethod.AUTO);
 			LogUtils.logWarning(ID, "Could not find a suitable dot executable.  Please specify one using Window -> Preferences -> Graphviz.", null);
 		}

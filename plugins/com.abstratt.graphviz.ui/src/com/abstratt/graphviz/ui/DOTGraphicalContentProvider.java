@@ -6,6 +6,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 
@@ -28,7 +30,11 @@ public class DOTGraphicalContentProvider extends AbstractGraphicalContentProvide
 	public Image loadImage(Display display, Point desiredSize, Object newInput) throws CoreException {
 		if (desiredSize == null)
 			desiredSize = new Point(0, 0);
-		return GraphViz.load(new ByteArrayInputStream((byte[]) newInput), "png", desiredSize);
+		byte[] imageContents = GraphViz.load(new ByteArrayInputStream((byte[]) newInput), "png", desiredSize.x, desiredSize.y);
+        // try to load the resulting image
+        ImageLoader loader = new ImageLoader();
+        ImageData[] imageData = loader.load(new ByteArrayInputStream(imageContents));
+        return new Image(Display.getDefault(), imageData[0]);
 	}
 
 	@Override
@@ -51,6 +57,6 @@ public class DOTGraphicalContentProvider extends AbstractGraphicalContentProvide
 			outputFormat = "tif";
 			break;
 		}
-		GraphViz.generate(new ByteArrayInputStream((byte[]) input), outputFormat, suggestedSize, outputLocation);
+		GraphViz.generate(new ByteArrayInputStream((byte[]) input), outputFormat, suggestedSize.x, suggestedSize.y, outputLocation);
 	}
 }

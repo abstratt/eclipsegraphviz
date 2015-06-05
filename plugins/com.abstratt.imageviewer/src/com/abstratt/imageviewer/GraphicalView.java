@@ -41,6 +41,10 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	public GraphicalView() {
 		//
 	}
+	
+	public GraphicalViewer getViewer() {
+        return viewer;
+    };
 
 	/**
 	 * This is a callback that wil l allow us to create the viewer and

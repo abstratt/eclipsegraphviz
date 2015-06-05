@@ -70,6 +70,15 @@
                toolbarPath="file_actions"
                tooltip="Save this image to a file">
          </action>
+         <action
+               class="com.abstratt.imageviewer.CopyToClipboardAction"
+               icon="icons/copyviewtoclipboard_tsk.gif"
+               id="com.abstratt.imageviewer.copyImage"
+               label="Copy to clipboard"
+               style="push"
+               toolbarPath="file_actions"
+               tooltip="Copy the image to the clipboard">
+         </action>
       </viewContribution>
    </extension>
 </plugin>

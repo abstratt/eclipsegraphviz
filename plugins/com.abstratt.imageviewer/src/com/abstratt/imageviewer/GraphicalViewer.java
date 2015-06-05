@@ -100,13 +100,17 @@ public class GraphicalViewer extends ContentViewer {
 	}
 
 	private void paintCanvas(GC gc) {
-		Image image = getImage(canvas.getSize());
+		Image image = getImage();
 		if (image == null || image.isDisposed())
 			return;
 		Rectangle drawingBounds = getDrawingBounds(image);
 		gc.drawImage(image, 0, 0, image.getBounds().width, image.getBounds().height, drawingBounds.x, drawingBounds.y,
 						drawingBounds.width, drawingBounds.height);
 	}
+
+    public Image getImage() {
+        return getImage(canvas.getSize());
+    }
 
 	public void redrawImage() {
 		if (getContentProvider() == null)

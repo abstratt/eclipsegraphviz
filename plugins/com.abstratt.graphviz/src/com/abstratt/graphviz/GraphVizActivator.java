@@ -15,10 +15,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.Enumeration;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
@@ -90,10 +89,7 @@ public class GraphVizActivator implements BundleActivator {
 			// executable attribute is a *ix thing, on Windows all files are
 			// executable
 			return true;
-		IFileStore store = EFS.getLocalFileSystem().fromLocalFile(file);
-		if (store == null)
-			return false;
-		return store.fetchInfo().getAttribute(EFS.ATTRIBUTE_EXECUTABLE);
+		return Files.isExecutable(file.toPath());
 	}
 
 	public static void logUnexpected(String message, Exception e) {
@@ -103,7 +99,7 @@ public class GraphVizActivator implements BundleActivator {
 	// store paths as strings so they won't get screwed up by platform issues.
 	/**
 	 * Path to bundled dot or null if it can't be found. See
-	 * extractGraphVisBinaries().
+	 * extractGraphVizBinaries().
 	 */
 	private String bundledDotLocation;
 
@@ -155,17 +151,18 @@ public class GraphVizActivator implements BundleActivator {
 		}
 
 		public boolean accept(File candidate) {
-			if (!isExecutable(candidate))
-				return false;
-			return candidate.getName().equalsIgnoreCase(nameToMatch)
-							|| candidate.getName().startsWith(nameToMatch + '.');
+		    if (!candidate.getName().equalsIgnoreCase(nameToMatch)
+                            && !candidate.getName().startsWith(nameToMatch + '.'))
+		        return false;
+			boolean executable = isExecutable(candidate);
+			return executable;
 		}
 	}
 
 	/**
 	 * Tries to find and (if required) extract the binaries for a bundled
 	 * Graphviz install. If cannot find, the Graphviz integration will only work
-	 * if the #
+	 * if the ... ?
 	 * 
 	 * @param context
 	 * @throws IOException

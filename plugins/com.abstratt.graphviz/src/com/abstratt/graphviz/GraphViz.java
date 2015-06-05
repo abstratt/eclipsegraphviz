@@ -47,7 +47,13 @@ public class GraphViz {
 	private static final String DOT_EXTENSION = ".dot"; //$NON-NLS-1$
 	private static final String TMP_FILE_PREFIX = "graphviz"; //$NON-NLS-1$
 
+
 	public static void generate(final InputStream input, String format, Point dimension, IPath outputLocation)
+            throws CoreException {
+	    generate(input, format, dimension.x, dimension.y, outputLocation);
+	}
+	
+	public static void generate(final InputStream input, String format, int dimensionX, int dimensionY, IPath outputLocation)
 					throws CoreException {
 		MultiStatus status = new MultiStatus(GraphVizActivator.ID, 0, "Errors occurred while running Graphviz", null);
 		File dotInput = null, dotOutput = outputLocation.toFile();
@@ -66,8 +72,8 @@ public class GraphViz {
 			} finally {
 				IOUtils.closeQuietly(tmpDotOutputStream);
 			}
-			IStatus result = runDot(format, dimension, dotInput, dotOutput);
-			if (dotOutput.isFile()) {
+			IStatus result = runDot(format, dimensionX, dimensionY, dotInput, dotOutput);
+			if (dotOutput.isFile() && dotOutput.length() > 0) {
 				if (!result.isOK() && Platform.inDebugMode())
 					LogUtils.log(status);
 				// success!
@@ -136,12 +142,16 @@ public class GraphViz {
 		}
 		throw new CoreException(status);
 	}
-
+	
 	public static IStatus runDot(String format, Point dimension, File dotInput, File dotOutput) {
+	    return runDot(format, dimension.x, dimension.y, dotInput, dotOutput);
+	}
+
+	public static IStatus runDot(String format, int dimensionX, int dimensionY, File dotInput, File dotOutput) {
 		// build the command line
 		double dpi = 96;
-		double widthInInches = dimension.x / dpi;
-		double heightInInches = dimension.y / dpi;
+		double widthInInches = dimensionX / dpi;
+		double heightInInches = dimensionY / dpi;
 		List<String> cmd = new ArrayList<String>();
 		cmd.add("-o" + dotOutput.getAbsolutePath());
 		cmd.add("-T" + format);

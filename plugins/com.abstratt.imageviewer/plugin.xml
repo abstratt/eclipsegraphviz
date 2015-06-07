@@ -68,7 +68,7 @@
                label="Save to..."
                style="push"
                toolbarPath="file_actions"
-               tooltip="Save this image to a file">
+               tooltip="Save image to file">
          </action>
          <action
                class="com.abstratt.imageviewer.CopyToClipboardAction"
@@ -77,7 +77,7 @@
                label="Copy to clipboard"
                style="push"
                toolbarPath="file_actions"
-               tooltip="Copy the image to the clipboard">
+               tooltip="Copy image to clipboard">
          </action>
       </viewContribution>
    </extension>

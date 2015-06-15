@@ -6,8 +6,6 @@ This is the home for the EclipseGraphviz project, originally on SourceForge.
 
 EclipseGraphviz is an Eclipse plug-in that provides a Java API for Graphviz and an Image Viewer view that allows easily visualizing the graphical output of your .dot files as you save changes to them.
 
-
-
 #Installing EclipseGraphviz
 
 Requirements
@@ -65,11 +63,13 @@ Once Graphviz is installed, you may need to tell EclipseGraphviz where to
 find it. Open the Graphviz preference page in Eclipse and enter the
 location for the dot executable.
 
+#Using EclipseGraphviz
+
 ### How are diagrams rendered?
 
 EclipseGraphviz provides an "Image Viewer" view that will show a
-rendered class diagram whenever a .uml file is selected or a TextUML
-Viewer editor is currently selected. To open the Image Viewer, go Window
+rendered diagram whenever a .dot file is selected or an editor loaded with a .dot file 
+is currently selected (saving triggers updates). To open the Image Viewer, go Window
 \> Show view \> Other... \> EclipseGraphviz \> Image viewer.
 
 ### Screenshots

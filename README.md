@@ -65,8 +65,8 @@ Once Graphviz is installed, you may need to tell EclipseGraphviz where to
 find it. Open the Graphviz preference page in Eclipse and enter the
 location for the dot executable.
 
-Using EclipseGraphviz
----------------
+#Using EclipseGraphviz
+
 ### How are diagrams rendered?
 
 EclipseGraphviz provides an "Image Viewer" view that will show a

@@ -82,4 +82,4 @@ The Image Viewer view automatically renders diagrams as you select .dot files in
 #### Editing files
 ![Editing dot files](images/editing.jpg "Editing dot files")
 
-The Image Viewer view automatically renders diagrams as you edit .dot files in an Eclipse editor (upadting as you save your changes). 
+The Image Viewer view automatically renders diagrams as you edit .dot files in an Eclipse editor (updating as you save your changes). 

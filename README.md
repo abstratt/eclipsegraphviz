@@ -6,6 +6,8 @@ This is the home for the EclipseGraphviz project, originally on SourceForge.
 
 EclipseGraphviz is an Eclipse plug-in that provides a Java API for Graphviz and an Image Viewer view that allows easily visualizing the graphical output of your .dot files as you save changes to them.
 
+
+
 #Installing EclipseGraphviz
 
 Requirements

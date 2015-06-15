@@ -71,12 +71,15 @@ is currently selected (saving triggers updates). To open the Image Viewer, go Wi
 
 #### Preferences page
 ![Preferences Page](images/preferences.jpg "Preferences Page")
+
 Allows configuring how to find Graphviz and global options for the dot tool.
 
 #### Browsing files
 ![Browsing dot files](images/browsing.jpg "Browsing dot files")
+
 The Image Viewer view automatically renders diagrams as you select .dot files in Eclipse. 
 
 #### Editing files
 ![Editing dot files](images/editing.jpg "Editing dot files")
+
 The Image Viewer view automatically renders diagrams as you edit .dot files in an Eclipse editor (upadting as you save your changes). 

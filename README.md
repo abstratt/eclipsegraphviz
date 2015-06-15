@@ -13,6 +13,7 @@ Requirements
 
 -   Java 8
 -   Eclipse Luna or later
+-   Graphviz
 
 Install Eclipse
 ---------------
@@ -43,8 +44,9 @@ Method 2: Installation via Update Manager
 
 -   Accept to restart Eclipse to make the changes effective.
 
-### Download and install Graphviz
 
+Download and install Graphviz
+---------------
 If you don't have it yet, download and install
 [Graphviz](http://graphviz.org/Download.php "http://graphviz.org/Download.php")
 for your platform.
@@ -57,14 +59,14 @@ page](http://graphviz.org/Download_windows.php "http://graphviz.org/Download_win
 From user reports, it seems XP usually requires that package to be
 installed, while Vista does not*.
 
-### Configure EclipseGraphviz
-
+Configure EclipseGraphviz
+---------------
 Once Graphviz is installed, you may need to tell EclipseGraphviz where to
 find it. Open the Graphviz preference page in Eclipse and enter the
 location for the dot executable.
 
-#Using EclipseGraphviz
-
+Using EclipseGraphviz
+---------------
 ### How are diagrams rendered?
 
 EclipseGraphviz provides an "Image Viewer" view that will show a

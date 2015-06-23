@@ -22,7 +22,8 @@
 		<module>repositories/com.abstratt.eclipsegraphviz.repository</module>
 	</modules>
 
-        <build><plugins>
+        <build>
+          <plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -48,14 +49,8 @@
 						<targetFile>dependencies.target</targetFile>
 					</targetFiles>
 				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>validate-target-platform</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>  			
-         </plugins></build>
+         </plugins>
+       </build>
 </project>
 

@@ -39,6 +39,23 @@
 					<resolver>p2</resolver>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>target-platform-validation-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<targetFiles>
+						<targetFile>dependencies.target</targetFile>
+					</targetFiles>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>validate-target-platform</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>  			
          </plugins></build>
 </project>
 

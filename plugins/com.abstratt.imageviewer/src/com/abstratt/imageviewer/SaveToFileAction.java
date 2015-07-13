@@ -25,16 +25,16 @@ import org.eclipse.ui.IViewPart;
 import com.abstratt.content.IContentProviderRegistry.IProviderDescription;
 
 public class SaveToFileAction implements IViewActionDelegate {
-	
-	private static final String[] VALID_EXTENSIONS = {"jpg", "png", "gif", "tif", "bmp"};
+
+	private static final String[] VALID_EXTENSIONS = {"jpg", "png", "gif", "tif", "bmp", "svg"};
 	private static final int[] VALID_FORMATS = {SWT.IMAGE_JPEG, SWT.IMAGE_PNG, SWT.IMAGE_GIF, SWT.IMAGE_TIFF, SWT.IMAGE_BMP};
 	private static final String[] VALID_EXTENSION_MASKS;
 	static {
 		VALID_EXTENSION_MASKS = new String[VALID_FORMATS.length];
 		for (int i = 0; i < VALID_EXTENSION_MASKS.length; i++)
-			VALID_EXTENSION_MASKS [i] = "*."+VALID_EXTENSIONS[i];			
+			VALID_EXTENSION_MASKS [i] = "*."+VALID_EXTENSIONS[i];
 	}
-	
+
 	private GraphicalView view;
 
 	public void init(IViewPart view) {
@@ -78,12 +78,12 @@ public class SaveToFileAction implements IViewActionDelegate {
 			else
 				MessageDialog.openError(null, "Invalid file path", "Could not create directory");
 		}
-		
+
 		new SaveImageJob(fileFormat, path, providerDefinition).schedule();
 	}
-	
+
 	private class SaveImageJob extends Job {
-		
+
 		private IProviderDescription providerDefinition;
 		private IPath path;
 		private int fileFormat;

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Graphviz DOT Viewer
 Bundle-SymbolicName: com.abstratt.graphviz.ui;singleton:=true
-Bundle-Version: 2.1.201501.qualifier
+Bundle-Version: 2.1.201502.qualifier
 Bundle-Activator: com.abstratt.graphviz.ui.Activator
 Bundle-Vendor: Abstratt Technologies
 Require-Bundle: org.eclipse.ui,

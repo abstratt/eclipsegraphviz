@@ -8,6 +8,14 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentDescription;
+import org.eclipse.debug.core.DebugException;
+import org.eclipse.debug.core.model.IValue;
+import org.eclipse.debug.core.model.IVariable;
+import org.eclipse.jdt.debug.core.IJavaObject;
+//import org.eclipse.debug.core.DebugException;
+//import org.eclipse.debug.core.model.IValue;
+//import org.eclipse.debug.core.model.IVariable;
+//import org.eclipse.jdt.debug.core.IJavaObject;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -41,7 +49,7 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	public GraphicalView() {
 		//
 	}
-	
+
 	public GraphicalViewer getViewer() {
         return viewer;
     };
@@ -58,8 +66,8 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 		installResourceListener();
 		installSelectionListener();
 		installPartListener();
-	}  
-	
+	}
+
 	@Override
 	public void dispose() {
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
@@ -91,9 +99,26 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 		if (structured.size() != 1)
 			return;
 		Object selected = structured.getFirstElement();
+		IValue val = null;
+		if (selected instanceof IVariable) {
+			try {
+				val = ((IVariable)selected).getValue();
+			} catch (DebugException e) {
+				if (Platform.inDebugMode())
+					Activator.logUnexpected(null, e);
+			} finally {
+				if (val != null) { // val : JDIOBjectvalue
+					if (val instanceof IJavaObject)
+						reload((IJavaObject) val);
+				}
+
+			}
+		}
 		IFile file = (IFile) Platform.getAdapterManager().getAdapter(selected, IFile.class);
 		reload(file);
 	}
+
+
 
 	public void partActivated(IWorkbenchPartReference partRef) {
 		reactToPartChange(partRef);
@@ -137,7 +162,7 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 						(IGraphicalFileProvider) editorPart.getAdapter(IGraphicalFileProvider.class);
 		if (graphicalSource != null)
 			selectedFile = graphicalSource.getGraphicalFile();
-		else 
+		else
 			selectedFile = null;
 		if (selectedFile == null) {
 			IFile asFile = (IFile) editorPart.getAdapter(IFile.class);
@@ -183,6 +208,18 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 		viewer.setInput(providerDefinition.read(file));
 	}
 
+	private void reload(IJavaObject debugObject) {
+		setPartName(basePartName + " - debug");
+		IProviderDescription providerDefinition = null;
+		providerDefinition = ContentSupport.getContentProviderRegistry().getDebugContentProvider();
+		if (providerDefinition == null) {
+			return;
+		}
+		IGraphicalContentProvider provider = (IGraphicalContentProvider) providerDefinition.getProvider();
+		viewer.setContentProvider(provider);
+		viewer.setInput(providerDefinition.read(debugObject));
+	}
+
 	private void requestUpdate() {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
@@ -216,7 +253,7 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	public IProviderDescription getContentProviderDescription() {
 		return providerDefinition;
 	}
-	
+
 	public IFile getSelectedFile() {
 		return selectedFile;
 	}

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Generic Image Viewer Plug-in
 Bundle-SymbolicName: com.abstratt.imageviewer;singleton:=true
-Bundle-Version: 2.1.201501.qualifier
+Bundle-Version: 2.1.201502.qualifier
 Bundle-Activator: com.abstratt.imageviewer.Activator
 Bundle-Vendor: Abstratt Technologies
 Require-Bundle: org.eclipse.core.runtime,
@@ -13,8 +13,11 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.apache.commons.io,
  com.abstratt.pluginutils,
- com.abstratt.content, 
- org.apache.commons.beanutils
+ com.abstratt.content,
+ org.apache.commons.beanutils,
+ org.eclipse.debug.core;bundle-version="3.10.0",
+ org.eclipse.jdt.debug;bundle-version="3.9.0",
+ org.eclipse.jdt.debug.ui;bundle-version="3.7.0"
 Import-Package: org.eclipse.core.runtime
 Eclipse-LazyStart: true
 Export-Package: com.abstratt.imageviewer

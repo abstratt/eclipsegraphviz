@@ -20,7 +20,8 @@ public class JDIObjectToByteArrayContentReader {
 		try {
 			toStringValue = input.sendMessage(JDI_OBJECT_TO_DOT, "()Ljava/lang/String;", null, thread, false);
 		} catch (DebugException e) {
-			Activator.logUnexpected(null, e);
+			//Activator.logUnexpected(null, e);
+			//Silently return
 			return null;
 		}
 		try {

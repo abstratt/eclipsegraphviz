@@ -47,7 +47,7 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
     };
 
 	/**
-	 * This is a callback that wil l allow us to create the viewer and
+	 * This is a callback that will allow us to create the viewer and
 	 * initialize it.
 	 */
 	@Override
@@ -153,9 +153,9 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	private void reload(IFile file) {
 		setPartName(basePartName);
 		this.providerDefinition = null;
+		this.selectedFile = null;
 		if (file == null || !file.exists())
 			return;
-		selectedFile = null;
 		if (viewer.getContentProvider() != null)
 			// to avoid one provider trying to interpret an
 			// incompatible input
@@ -175,12 +175,12 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 		if (providerDefinition == null) {
 			return;
 		}
-		this.providerDefinition = providerDefinition;
 		setPartName(basePartName + " - " + file.getName());
 		IGraphicalContentProvider provider = (IGraphicalContentProvider) providerDefinition.getProvider();
 		setContents(providerDefinition.read(file), provider);
 		// enables support for file rendering
-		selectedFile = file;
+		this.selectedFile = file;
+		this.providerDefinition = providerDefinition;
 	}
 
 	/**
@@ -193,6 +193,7 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 			IGraphicalContentProvider provider) {
 		// assumes the general case (instead of file rendering)
 		selectedFile = null;
+		providerDefinition = null;
 		viewer.setContentProvider(provider);
 		viewer.setInput(contents);
 	}

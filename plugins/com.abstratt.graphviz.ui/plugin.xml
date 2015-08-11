@@ -21,6 +21,23 @@
             name="Graphviz">
       </page>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.viewActions">
+      <viewContribution
+            id="com.abstratt.graphviz.ui.graphicalViewActions"
+            targetID="com.abstratt.imageviewer.GraphicalView">
+         <action
+               class="com.abstratt.graphviz.ui.RenderClipboardAction"
+               icon="icons/paste_edit.gif"
+               id="com.abstratt.imageviewer.renderClipboard"
+               label="Render DOT from clipboard"
+               style="push"
+               toolbarPath="clipboard_actions"
+               tooltip="Render DOT contents from the clipboard as image">
+         </action>
+      </viewContribution>
+   </extension>
 
 
 </plugin>

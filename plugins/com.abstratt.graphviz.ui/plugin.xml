@@ -14,6 +14,15 @@
       </provider>
    </extension>
    <extension
+         point="com.abstratt.content.debug">
+      <provider
+            class="com.abstratt.graphviz.ui.DOTGraphicalContentProvider">
+         <reader
+               class="com.abstratt.imageviewer.JDIObjectToByteArrayContentReader">
+         </reader>
+      </provider>
+   </extension>
+   <extension
          point="org.eclipse.ui.preferencePages">
       <page
             class="com.abstratt.graphviz.ui.GraphVizPreferencePage"
@@ -21,6 +30,4 @@
             name="Graphviz">
       </page>
    </extension>
-
-
 </plugin>

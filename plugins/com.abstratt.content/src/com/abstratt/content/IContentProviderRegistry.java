@@ -29,4 +29,9 @@ public interface IContentProviderRegistry {
 	public IProviderDescription findContentProvider(IContentType target,
 					Class<? extends IContentProvider> minimumProtocol);
 
+	/**
+	 * Get a content provider for debugging support
+	 */
+	public IProviderDescription getDebugContentProvider();
+
 }

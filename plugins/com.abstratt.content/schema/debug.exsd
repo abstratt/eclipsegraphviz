@@ -3,10 +3,10 @@
 <schema targetNamespace="com.abstratt.content" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="com.abstratt.content" id="content_provider" name="Content Provider"/>
+         <meta.schema plugin="com.abstratt.content" id="debug" name="Debug"/>
       </appInfo>
       <documentation>
-         An extension point for implementors of IContentProvider.
+         An extension point for the Debugger
       </documentation>
    </annotation>
 
@@ -50,8 +50,7 @@
    <element name="provider">
       <complexType>
          <sequence>
-            <element ref="association" minOccurs="1" maxOccurs="unbounded"/>
-            <element ref="reader" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="reader"/>
          </sequence>
          <attribute name="class" type="string" use="required">
             <annotation>
@@ -61,18 +60,6 @@
                <appInfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.jface.viewers.IContentProvider"/>
                </appInfo>
-            </annotation>
-         </attribute>
-      </complexType>
-   </element>
-
-   <element name="association">
-      <complexType>
-         <attribute name="contentType" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
             </annotation>
          </attribute>
       </complexType>
@@ -103,7 +90,7 @@
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         2.1.201502
       </documentation>
    </annotation>
 
@@ -112,13 +99,21 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         [Enter extension point usage example here.]
+         &lt;extension
+         point=&quot;com.abstratt.content.debug&quot;&gt;
+      &lt;provider
+            class=&quot;com.abstratt.graphviz.ui.DOTGraphicalContentProvider&quot;&gt;
+         &lt;reader
+               class=&quot;com.abstratt.imageviewer.JDIObjectToByteArrayContentReader&quot;&gt;
+         &lt;/reader&gt;
+      &lt;/provider&gt;
+   &lt;/extension&gt;
       </documentation>
    </annotation>
 
    <annotation>
       <appInfo>
-         <meta.section type="apiInfo"/>
+         <meta.section type="apiinfo"/>
       </appInfo>
       <documentation>
          [Enter API information here.]

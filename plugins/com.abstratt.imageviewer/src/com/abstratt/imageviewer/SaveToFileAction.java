@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 
+import com.abstratt.content.PlaceholderProviderDescription;
 import com.abstratt.content.IContentProviderRegistry.IProviderDescription;
 
 public class SaveToFileAction implements IViewActionDelegate {
@@ -44,17 +45,20 @@ public class SaveToFileAction implements IViewActionDelegate {
 	public void run(IAction action) {
 		IProviderDescription providerDefinition = view.getContentProviderDescription();
 		if (providerDefinition == null)
-			return;
+			providerDefinition = new PlaceholderProviderDescription(view.getInput(), view.getContentProvider());
 		IFile selectedFile = view.getSelectedFile();
+		String suggestedName;
 		if (selectedFile == null)
-			return;
+			suggestedName = "image";
+		else
+			suggestedName = selectedFile.getLocation().removeFileExtension().lastSegment();
 		boolean pathIsValid = false;
 		IPath path = null;
 		int fileFormat = 0;
 		while (!pathIsValid ) {
 			FileDialog saveDialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
 			saveDialog.setText("Choose a location to save to");
-			saveDialog.setFileName(selectedFile.getLocation().removeFileExtension().lastSegment());
+			saveDialog.setFileName(suggestedName);
 			saveDialog.setFilterExtensions(VALID_EXTENSION_MASKS);
 			String pathString = saveDialog.open();
 			if (pathString == null)

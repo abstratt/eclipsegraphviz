@@ -128,7 +128,7 @@ public class ContentProviderRegistry implements IContentProviderRegistry {
 	 */
 	public IProviderDescription findContentProvider(IContentType target,
 					Class<? extends IContentProvider> minimumProtocol) {
-		for (IProviderDescription descriptor : providerDescriptors)
+		for (ContentProviderDescriptor descriptor : providerDescriptors)
 			for (IContentType contentType : descriptor.getAssociations())
 				if (target.isKindOf(contentType)) {
 					if (minimumProtocol != null && minimumProtocol.isInstance(descriptor.getProvider()))

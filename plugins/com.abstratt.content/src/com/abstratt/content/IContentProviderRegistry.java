@@ -1,16 +1,10 @@
 package com.abstratt.content;
 
-import java.util.Set;
-
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.jface.viewers.IContentProvider;
 
 public interface IContentProviderRegistry {
 	public interface IProviderDescription {
-		public boolean canRead(Class<?> sourceType);
-
-		public Set<IContentType> getAssociations();
-
 		public IContentProvider getProvider();
 
 		/**

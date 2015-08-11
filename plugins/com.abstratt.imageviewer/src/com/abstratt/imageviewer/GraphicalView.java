@@ -78,6 +78,10 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	private void installPartListener() {
 		getSite().getPage().addPartListener(this);
 		// tries to load an image for the current active part, if any
+		loadFromActivePart();
+	}
+
+	private void loadFromActivePart() {
 		final IWorkbenchPartReference activePartReference = getSite().getPage().getActivePartReference();
 		if (activePartReference != null)
 			reactToPartChange(activePartReference);
@@ -92,6 +96,10 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	}
 
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+		reactToSelection(selection);
+	}
+
+	private void reactToSelection(ISelection selection) {
 		if (!autoSync)
 			return;
 		if (!(selection instanceof IStructuredSelection))
@@ -208,6 +216,14 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 		viewer.setContentProvider(provider);
 		viewer.setInput(contents);
 		setPartName(basePartName);
+	}
+	
+	Object getInput() {
+		return viewer.getInput();
+	}
+	
+	IGraphicalContentProvider getContentProvider() {
+		return (IGraphicalContentProvider) viewer.getContentProvider();
 	}
 
 	private void requestUpdate() {

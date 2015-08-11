@@ -175,12 +175,26 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 		if (providerDefinition == null) {
 			return;
 		}
-		setPartName(basePartName + " - " + file.getName());
-		selectedFile = file;
 		this.providerDefinition = providerDefinition;
+		setPartName(basePartName + " - " + file.getName());
 		IGraphicalContentProvider provider = (IGraphicalContentProvider) providerDefinition.getProvider();
+		setContents(providerDefinition.read(file), provider);
+		// enables support for file rendering
+		selectedFile = file;
+	}
+
+	/**
+	 * Force feeds the contents to be shown.
+	 * 
+	 * @param contents the contents to be presented (as expected by the content provider
+	 * @param provider the graphical content provider that can render the given contents 
+	 */
+	public void setContents(Object contents,
+			IGraphicalContentProvider provider) {
+		// assumes the general case (instead of file rendering)
+		selectedFile = null;
 		viewer.setContentProvider(provider);
-		viewer.setInput(providerDefinition.read(file));
+		viewer.setInput(contents);
 	}
 
 	private void requestUpdate() {
@@ -192,7 +206,6 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 				reload(selectedFile);
 			}
 		});
-
 	}
 
 	public void resourceChanged(IResourceChangeEvent event) {

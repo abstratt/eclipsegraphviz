@@ -79,6 +79,17 @@
                toolbarPath="file_actions"
                tooltip="Copy image to clipboard">
          </action>
+         <action
+               class="com.abstratt.imageviewer.ToggleSyncAction"
+               icon="icons/synced.gif"
+               id="com.abstratt.imageviewer.autoUpdate"
+               label="Toggle automatic synchronization"
+               state="true"
+         	   enablesFor="*"      
+               style="toggle"
+               toolbarPath="file_actions"
+               tooltip="Toggle automatic synchronization">
+         </action>         
       </viewContribution>
    </extension>
 </plugin>

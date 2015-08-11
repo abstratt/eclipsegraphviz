@@ -8,6 +8,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentDescription;
+import org.eclipse.jface.action.ActionContributionItem;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -34,6 +37,10 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	private String basePartName;
 	private IFile selectedFile;
 	private IProviderDescription providerDefinition;
+	/**
+	 * Whether this view should try to automatically react to changes in selection/selected object.
+	 */
+	private boolean autoSync = true;
 
 	/**
 	 * The constructor.
@@ -58,7 +65,7 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 		installResourceListener();
 		installSelectionListener();
 		installPartListener();
-	}  
+	}
 	
 	@Override
 	public void dispose() {
@@ -85,6 +92,8 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	}
 
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+		if (!autoSync)
+			return;
 		if (!(selection instanceof IStructuredSelection))
 			return;
 		IStructuredSelection structured = (IStructuredSelection) selection;
@@ -128,6 +137,8 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	}
 
 	private void reactToPartChange(IWorkbenchPartReference part) {
+		if (!autoSync)
+			return;
 		if (!(part.getPart(false) instanceof IEditorPart))
 			return;
 		IEditorPart editorPart = (IEditorPart) part.getPart(false);
@@ -233,5 +244,36 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	
 	public IFile getSelectedFile() {
 		return selectedFile;
+	}
+	
+	public boolean isAutoSync() {
+		return autoSync;
+	}
+	
+	/**
+	 * Enables/disables the view auto-sync feature.
+	 * 
+	 * @param autoSync whether the view should auto synchronize to the current selection.
+	 */
+	public void setAutoSync(boolean autoSync) {
+		this.autoSync = autoSync;
+		updateAutoSyncToggleButtonState();
+	}
+
+	private void updateAutoSyncToggleButtonState() {
+		IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
+		ActionContributionItem autoSyncToggleContribution = (ActionContributionItem) toolBarManager.find("com.abstratt.imageviewer.autoUpdate");
+		if (autoSyncToggleContribution != null) {
+			IAction action = autoSyncToggleContribution.getAction();
+			action.setChecked(isAutoSync());
+		}
+	}
+	
+	
+	/**
+	 * Toggles the view auto-sync state.
+	 */
+	public void toggleSync() {
+		setAutoSync(!isAutoSync()) ;
 	}
 }

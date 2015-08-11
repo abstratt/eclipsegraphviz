@@ -115,7 +115,7 @@ public class GraphicalViewer extends ContentViewer {
 	public void redrawImage() {
 		if (getContentProvider() == null)
 			return;
-		Class contentProviderClass = getContentProvider().getClass();
+		Class<?> contentProviderClass = getContentProvider().getClass();
 		try {
 			setContentProvider((IContentProvider) ConstructorUtils.invokeConstructor(contentProviderClass,
 							new Object[0]));

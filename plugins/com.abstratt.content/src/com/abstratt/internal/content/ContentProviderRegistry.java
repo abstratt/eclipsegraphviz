@@ -30,22 +30,18 @@ public class ContentProviderRegistry implements IContentProviderRegistry {
 
 		public ContentProviderDescriptor(IConfigurationElement configElement) {
 			this.configElement = configElement;
-			IConfigurationElement[] associationElements = configElement
-			        .getChildren("association");
+			IConfigurationElement[] associationElements = configElement.getChildren("association");
 			IContentTypeManager pcm = Platform.getContentTypeManager();
 			for (IConfigurationElement associationEl : associationElements)
-				associations.add(pcm.getContentType(associationEl
-				        .getAttribute("contentType")));
-			IConfigurationElement[] readerElements = configElement
-			        .getChildren("reader");
+				associations.add(pcm.getContentType(associationEl.getAttribute("contentType")));
+			IConfigurationElement[] readerElements = configElement.getChildren("reader");
 			for (IConfigurationElement readerEl : readerElements)
 				try {
 					Object reader = readerEl.createExecutableExtension("class");
 					readers.add(reader);
 				} catch (CoreException e) {
-					LogUtils.logError(ContentSupport.PLUGIN_ID,
-					        "Error processing content provider extension "
-					                + configElement.getNamespaceIdentifier(), e);
+					LogUtils.logError(ContentSupport.PLUGIN_ID, "Error processing content provider extension "
+					        + configElement.getNamespaceIdentifier(), e);
 				}
 		}
 
@@ -66,20 +62,17 @@ public class ContentProviderRegistry implements IContentProviderRegistry {
 
 		public IContentProvider getProvider() {
 			try {
-				return (IContentProvider) configElement
-				        .createExecutableExtension("class");
+				return (IContentProvider) configElement.createExecutableExtension("class");
 			} catch (CoreException e) {
-				LogUtils.logError(ContentSupport.PLUGIN_ID,
-				        "Could not instantiate content provider", e);
+				LogUtils.logError(ContentSupport.PLUGIN_ID, "Could not instantiate content provider", e);
 			}
 			return null;
 		}
 
 		private Method getReaderMethod(Object reader, Class<?> sourceType) {
-			Method method = MethodUtils.getMatchingAccessibleMethod(
-			        reader.getClass(), "read", new Class[] { sourceType });
-			return method == null || method.getReturnType() == Void.class ? null
-			        : method;
+			Method method = MethodUtils.getMatchingAccessibleMethod(reader.getClass(), "read",
+			        new Class[] { sourceType });
+			return method == null || method.getReturnType() == Void.class ? null : method;
 		}
 
 		public Object read(Object source) {
@@ -98,8 +91,7 @@ public class ContentProviderRegistry implements IContentProviderRegistry {
 		}
 	}
 
-	private static final String CONTENT_PROVIDER_XP = ContentSupport.PLUGIN_ID
-	        + ".contentProvider"; //$NON-NLS-1$
+	private static final String CONTENT_PROVIDER_XP = ContentSupport.PLUGIN_ID + ".contentProvider"; //$NON-NLS-1$
 
 	public List<ContentProviderDescriptor> providerDescriptors = new ArrayList<ContentProviderDescriptor>();
 
@@ -139,9 +131,7 @@ public class ContentProviderRegistry implements IContentProviderRegistry {
 		for (ContentProviderDescriptor descriptor : providerDescriptors)
 			for (IContentType contentType : descriptor.getAssociations())
 				if (target.isKindOf(contentType)) {
-					if (minimumProtocol != null
-					        && minimumProtocol.isInstance(descriptor
-					                .getProvider()))
+					if (minimumProtocol != null && minimumProtocol.isInstance(descriptor.getProvider()))
 						return descriptor;
 				}
 		return null;

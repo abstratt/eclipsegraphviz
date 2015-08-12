@@ -6,8 +6,7 @@ import org.eclipse.core.runtime.Status;
 import org.osgi.framework.Bundle;
 
 public class LogUtils {
-	public static void log(int severity, String pluginId, String message,
-	        Throwable exception) {
+	public static void log(int severity, String pluginId, String message, Throwable exception) {
 		log(new Status(severity, pluginId, message, exception));
 	}
 
@@ -26,9 +25,8 @@ public class LogUtils {
 			String thisPluginId = LogUtils.class.getPackage().getName();
 			bundle = Platform.getBundle(thisPluginId);
 			Platform.getLog(bundle).log(
-			        new Status(IStatus.WARNING, thisPluginId,
-			                "Could not find a plugin " + status.getPlugin()
-			                        + " for logging as"));
+			        new Status(IStatus.WARNING, thisPluginId, "Could not find a plugin " + status.getPlugin()
+			                + " for logging as"));
 		}
 		Platform.getLog(bundle).log(status);
 	}

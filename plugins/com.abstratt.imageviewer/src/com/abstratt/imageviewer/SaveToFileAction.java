@@ -27,10 +27,9 @@ import com.abstratt.content.PlaceholderProviderDescription;
 
 public class SaveToFileAction implements IViewActionDelegate {
 
-	private static final String[] VALID_EXTENSIONS = { "jpg", "png", "gif",
-	        "tif", "bmp" };
-	private static final int[] VALID_FORMATS = { SWT.IMAGE_JPEG, SWT.IMAGE_PNG,
-	        SWT.IMAGE_GIF, SWT.IMAGE_TIFF, SWT.IMAGE_BMP };
+	private static final String[] VALID_EXTENSIONS = { "jpg", "png", "gif", "tif", "bmp" };
+	private static final int[] VALID_FORMATS = { SWT.IMAGE_JPEG, SWT.IMAGE_PNG, SWT.IMAGE_GIF, SWT.IMAGE_TIFF,
+	        SWT.IMAGE_BMP };
 	private static final String[] VALID_EXTENSION_MASKS;
 	static {
 		VALID_EXTENSION_MASKS = new String[VALID_FORMATS.length];
@@ -45,24 +44,20 @@ public class SaveToFileAction implements IViewActionDelegate {
 	}
 
 	public void run(IAction action) {
-		IProviderDescription providerDefinition = view
-		        .getContentProviderDescription();
+		IProviderDescription providerDefinition = view.getContentProviderDescription();
 		if (providerDefinition == null)
-			providerDefinition = new PlaceholderProviderDescription(
-			        view.getInput(), view.getContentProvider());
+			providerDefinition = new PlaceholderProviderDescription(view.getInput(), view.getContentProvider());
 		IFile selectedFile = view.getSelectedFile();
 		String suggestedName;
 		if (selectedFile == null)
 			suggestedName = "image";
 		else
-			suggestedName = selectedFile.getLocation().removeFileExtension()
-			        .lastSegment();
+			suggestedName = selectedFile.getLocation().removeFileExtension().lastSegment();
 		boolean pathIsValid = false;
 		IPath path = null;
 		int fileFormat = 0;
 		while (!pathIsValid) {
-			FileDialog saveDialog = new FileDialog(Display.getCurrent()
-			        .getActiveShell(), SWT.SAVE);
+			FileDialog saveDialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
 			saveDialog.setText("Choose a location to save to");
 			saveDialog.setFileName(suggestedName);
 			saveDialog.setFilterExtensions(VALID_EXTENSION_MASKS);
@@ -71,27 +66,23 @@ public class SaveToFileAction implements IViewActionDelegate {
 				return;
 			path = Path.fromOSString(pathString);
 			if (path.toFile().isDirectory()) {
-				MessageDialog.openError(null, "Invalid file path",
-				        "Location is already in use by a directory");
+				MessageDialog.openError(null, "Invalid file path", "Location is already in use by a directory");
 				continue;
 			}
 			String extension = path.getFileExtension();
 			List<String> validExtensionsList = Arrays.asList(VALID_EXTENSIONS);
-			if (extension == null
-			        || !validExtensionsList.contains(extension.toLowerCase())) {
-				MessageDialog.openError(null, "Invalid file extension",
-				        "Supported file formats are: " + validExtensionsList);
+			if (extension == null || !validExtensionsList.contains(extension.toLowerCase())) {
+				MessageDialog.openError(null, "Invalid file extension", "Supported file formats are: "
+				        + validExtensionsList);
 				continue;
 			}
-			fileFormat = VALID_FORMATS[validExtensionsList.indexOf(extension
-			        .toLowerCase())];
+			fileFormat = VALID_FORMATS[validExtensionsList.indexOf(extension.toLowerCase())];
 			File parentDir = path.toFile().getParentFile();
 			parentDir.mkdirs();
 			if (parentDir.isDirectory())
 				pathIsValid = true;
 			else
-				MessageDialog.openError(null, "Invalid file path",
-				        "Could not create directory");
+				MessageDialog.openError(null, "Invalid file path", "Could not create directory");
 		}
 
 		new SaveImageJob(fileFormat, path, providerDefinition).schedule();
@@ -103,8 +94,7 @@ public class SaveToFileAction implements IViewActionDelegate {
 		private IPath path;
 		private int fileFormat;
 
-		public SaveImageJob(int fileFormat, IPath path,
-		        IProviderDescription providerDefinition) {
+		public SaveImageJob(int fileFormat, IPath path, IProviderDescription providerDefinition) {
 			super("Image saving job");
 			this.fileFormat = fileFormat;
 			this.path = path;
@@ -114,20 +104,15 @@ public class SaveToFileAction implements IViewActionDelegate {
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
 			monitor.beginTask("saving image", 100);
-			getJobManager().beginRule(
-			        AbstractGraphicalContentProvider.CONTENT_LOADING_RULE,
-			        monitor);
+			getJobManager().beginRule(AbstractGraphicalContentProvider.CONTENT_LOADING_RULE, monitor);
 			try {
-				IGraphicalContentProvider provider = (IGraphicalContentProvider) providerDefinition
-				        .getProvider();
+				IGraphicalContentProvider provider = (IGraphicalContentProvider) providerDefinition.getProvider();
 				Object input = providerDefinition.read(view.getSelectedFile());
-				provider.saveImage(Display.getDefault(), new Point(0, 0),
-				        input, path, fileFormat);
+				provider.saveImage(Display.getDefault(), new Point(0, 0), input, path, fileFormat);
 			} catch (CoreException e) {
 				return e.getStatus();
 			} finally {
-				getJobManager().endRule(
-				        AbstractGraphicalContentProvider.CONTENT_LOADING_RULE);
+				getJobManager().endRule(AbstractGraphicalContentProvider.CONTENT_LOADING_RULE);
 				monitor.done();
 			}
 			return Status.OK_STATUS;

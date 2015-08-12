@@ -24,8 +24,7 @@ public class CopyToClipboardAction implements IViewActionDelegate {
 		ImageData imageData = image.getImageData();
 		ImageTransfer imageTransfer = ImageTransfer.getInstance();
 		Clipboard clipboard = new Clipboard(Display.getCurrent());
-		clipboard.setContents(new Object[] { imageData },
-		        new Transfer[] { imageTransfer });
+		clipboard.setContents(new Object[] { imageData }, new Transfer[] { imageTransfer });
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {

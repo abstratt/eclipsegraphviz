@@ -60,8 +60,7 @@ public class ProcessController {
 	 * @param params
 	 *            the parameters to be passed to the controlled process
 	 */
-	public ProcessController(long timeout, String[] params, String[] env,
-	        File baseDir) {
+	public ProcessController(long timeout, String[] params, String[] env, File baseDir) {
 		timeLimit = timeout;
 		this.params = params;
 		this.env = env;
@@ -99,8 +98,7 @@ public class ProcessController {
 	 * @throws TimeOutException
 	 *             if the process did not complete in time
 	 */
-	public int execute() throws InterruptedException, IOException,
-	        TimeOutException {
+	public int execute() throws InterruptedException, IOException, TimeOutException {
 		startupTime = System.currentTimeMillis();
 		process = Runtime.getRuntime().exec(params, env, baseDir);
 		if (forwardStdErr != null)
@@ -157,8 +155,7 @@ public class ProcessController {
 		forwardStdOut = out;
 	}
 
-	private void forwardStream(final String name, final InputStream in,
-	        final OutputStream out) {
+	private void forwardStream(final String name, final InputStream in, final OutputStream out) {
 		new Thread("Stream forwarder [" + name + "]") {
 			@Override
 			public void run() {

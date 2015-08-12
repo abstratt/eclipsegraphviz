@@ -131,8 +131,7 @@ public class GraphVizActivator implements BundleActivator {
 		String paths = System.getenv("PATH");
 		for (String path : paths.split(File.pathSeparator)) {
 			File directory = new File(path);
-			File[] matchingFiles = directory.listFiles(new ExecutableFinder(
-			        DOT_FILE_NAME));
+			File[] matchingFiles = directory.listFiles(new ExecutableFinder(DOT_FILE_NAME));
 			if (matchingFiles != null && matchingFiles.length > 0) {
 				File found = matchingFiles[0];
 				autodetectedDotLocation = found.getAbsolutePath();
@@ -166,10 +165,8 @@ public class GraphVizActivator implements BundleActivator {
 	 * @param context
 	 * @throws IOException
 	 */
-	private String extractGraphVizBinaries(BundleContext context)
-	        throws IOException {
-		Enumeration<?> found = context.getBundle().findEntries(
-		        "/graphviz-min/", "eg_dot*", false);
+	private String extractGraphVizBinaries(BundleContext context) throws IOException {
+		Enumeration<?> found = context.getBundle().findEntries("/graphviz-min/", "eg_dot*", false);
 		if (found == null || !found.hasMoreElements()) {
 			return null;
 		}
@@ -179,8 +176,7 @@ public class GraphVizActivator implements BundleActivator {
 		URL fileURL = FileLocator.toFileURL(basicURL);
 		if (!fileURL.getProtocol().startsWith("file")) {
 			IStatus bundledBinariesStatus = new Status(IStatus.ERROR, ID,
-			        "Unexpected protocol for location of GraphViz binaries: '"
-			                + fileURL + "'");
+			        "Unexpected protocol for location of GraphViz binaries: '" + fileURL + "'");
 			Platform.getLog(context.getBundle()).log(bundledBinariesStatus);
 			return null;
 		}
@@ -209,12 +205,10 @@ public class GraphVizActivator implements BundleActivator {
 			return manualLocation != null ? new Path(manualLocation) : null;
 
 		case BUNDLE:
-			return bundledDotLocation != null ? new Path(bundledDotLocation)
-			        : null;
+			return bundledDotLocation != null ? new Path(bundledDotLocation) : null;
 
 		case DETECT:
-			return autodetectedDotLocation != null ? new Path(
-			        autodetectedDotLocation) : null;
+			return autodetectedDotLocation != null ? new Path(autodetectedDotLocation) : null;
 
 		case MANUAL:
 			return manualLocation != null ? new Path(manualLocation) : null;
@@ -233,8 +227,7 @@ public class GraphVizActivator implements BundleActivator {
 
 	public File getGraphVizDirectory() {
 		IPath dotLocation = getDotLocation();
-		return dotLocation == null ? null : dotLocation.removeLastSegments(1)
-		        .toFile();
+		return dotLocation == null ? null : dotLocation.removeLastSegments(1).toFile();
 	}
 
 	public String getManualDotPath() {
@@ -251,8 +244,8 @@ public class GraphVizActivator implements BundleActivator {
 
 	/** Returns the preference with the given name */
 	public String getPreference(String preference_name) {
-		Preferences node = Platform.getPreferencesService().getRootNode()
-		        .node(InstanceScope.SCOPE).node(GraphVizActivator.ID);
+		Preferences node = Platform.getPreferencesService().getRootNode().node(InstanceScope.SCOPE)
+		        .node(GraphVizActivator.ID);
 		return node.get(preference_name, null);
 	}
 
@@ -270,10 +263,8 @@ public class GraphVizActivator implements BundleActivator {
 
 	/** Sets the given preference to the given value */
 	public void setPreference(String preferenceName, String value) {
-		IEclipsePreferences root = Platform.getPreferencesService()
-		        .getRootNode();
-		Preferences node = root.node(InstanceScope.SCOPE).node(
-		        GraphVizActivator.ID);
+		IEclipsePreferences root = Platform.getPreferencesService().getRootNode();
+		Preferences node = root.node(InstanceScope.SCOPE).node(GraphVizActivator.ID);
 		node.put(preferenceName, value);
 		try {
 			node.flush();
@@ -293,8 +284,7 @@ public class GraphVizActivator implements BundleActivator {
 		// then try to find any installed copies of dot
 		autodetectDots();
 		if (autodetectedDotLocation != null) {
-			LogUtils.logInfo(getClass().getPackage().getName(),
-			        "Detected dot at " + autodetectedDotLocation, null);
+			LogUtils.logInfo(getClass().getPackage().getName(), "Detected dot at " + autodetectedDotLocation, null);
 		} else if (getDotSearchMethod() == DotMethod.DETECT) {
 			setDotSearchMethod(DotMethod.AUTO);
 			LogUtils.logWarning(

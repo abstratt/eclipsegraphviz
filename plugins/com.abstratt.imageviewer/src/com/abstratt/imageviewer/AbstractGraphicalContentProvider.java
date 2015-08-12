@@ -21,8 +21,7 @@ import org.eclipse.swt.widgets.Display;
 
 import com.abstratt.pluginutils.LogUtils;
 
-public abstract class AbstractGraphicalContentProvider implements
-        IGraphicalContentProvider {
+public abstract class AbstractGraphicalContentProvider implements IGraphicalContentProvider {
 
 	private Image image;
 
@@ -79,13 +78,12 @@ public abstract class AbstractGraphicalContentProvider implements
 				disposeImage();
 				monitor.worked(50);
 				try {
-					setImage(AbstractGraphicalContentProvider.this.loadImage(
-					        Display.getDefault(), getSuggestedSize(), input));
+					setImage(AbstractGraphicalContentProvider.this.loadImage(Display.getDefault(), getSuggestedSize(),
+					        input));
 				} catch (CoreException e) {
 					if (!e.getStatus().isOK())
 						LogUtils.log(e.getStatus());
-					setImage(createErrorImage(Display.getDefault(),
-					        getSuggestedSize(), e.getStatus()));
+					setImage(createErrorImage(Display.getDefault(), getSuggestedSize(), e.getStatus()));
 				}
 				if (monitor.isCanceled())
 					return Status.CANCEL_STATUS;
@@ -114,8 +112,7 @@ public abstract class AbstractGraphicalContentProvider implements
 			// first cancel any competing image loading jobs
 			getJobManager().cancel(JOB_FAMILY);
 			this.input = input;
-			if (viewer.getControl().isDisposed()
-			        || !viewer.getControl().isVisible())
+			if (viewer.getControl().isDisposed() || !viewer.getControl().isVisible())
 				return;
 			this.viewer = viewer;
 			schedule(IMAGE_LOAD_DELAY);
@@ -175,8 +172,7 @@ public abstract class AbstractGraphicalContentProvider implements
 		return suggestedSize;
 	}
 
-	public final void inputChanged(final Viewer viewer, Object oldInput,
-	        final Object newInput) {
+	public final void inputChanged(final Viewer viewer, Object oldInput, final Object newInput) {
 		disposeImage();
 		if (newInput != null)
 			loaderJob.asyncLoadImage(newInput, viewer);
@@ -190,8 +186,7 @@ public abstract class AbstractGraphicalContentProvider implements
 		this.loaderJob.schedule(200);
 	}
 
-	public abstract Image loadImage(Display display, Point suggestedSize,
-	        Object newInput) throws CoreException;
+	public abstract Image loadImage(Display display, Point suggestedSize, Object newInput) throws CoreException;
 
 	/**
 	 * {@inheritDoc}
@@ -200,8 +195,8 @@ public abstract class AbstractGraphicalContentProvider implements
 	 * {@link #loadImage(Display, Point, Object)} method, subclasses are
 	 * encouraged to provide a more efficient implementation.
 	 */
-	public void saveImage(Display display, Point suggestedSize, Object input,
-	        IPath location, int fileFormat) throws CoreException {
+	public void saveImage(Display display, Point suggestedSize, Object input, IPath location, int fileFormat)
+	        throws CoreException {
 		Image toSave = loadImage(Display.getDefault(), new Point(0, 0), input);
 		try {
 			ImageLoader imageLoader = new ImageLoader();
@@ -209,11 +204,9 @@ public abstract class AbstractGraphicalContentProvider implements
 			ByteArrayOutputStream buffer = new ByteArrayOutputStream(200 * 1024);
 			imageLoader.save(buffer, fileFormat);
 			try {
-				FileUtils.writeByteArrayToFile(location.toFile(),
-				        buffer.toByteArray());
+				FileUtils.writeByteArrayToFile(location.toFile(), buffer.toByteArray());
 			} catch (IOException e) {
-				throw new CoreException(new Status(IStatus.ERROR,
-				        Activator.PLUGIN_ID, "Error saving image", e));
+				throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error saving image", e));
 			}
 		} finally {
 			toSave.dispose();

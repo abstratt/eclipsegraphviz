@@ -35,8 +35,7 @@ public interface IGraphicalContentProvider extends IContentProvider {
 	 * @throws CoreException
 	 *             if an error occurs while producing the image
 	 */
-	public Image loadImage(Display display, Point suggestedSize, Object newInput)
-	        throws CoreException;
+	public Image loadImage(Display display, Point suggestedSize, Object newInput) throws CoreException;
 
 	/**
 	 * Generates an image at the given location.
@@ -47,6 +46,6 @@ public interface IGraphicalContentProvider extends IContentProvider {
 	 * @param location
 	 * @throws CoreException
 	 */
-	public void saveImage(Display display, Point suggestedSize, Object input,
-	        IPath location, int fileFormat) throws CoreException;
+	public void saveImage(Display display, Point suggestedSize, Object input, IPath location, int fileFormat)
+	        throws CoreException;
 }

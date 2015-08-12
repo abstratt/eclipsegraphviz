@@ -104,8 +104,7 @@ public class GraphicalViewer extends ContentViewer {
 		if (image == null || image.isDisposed())
 			return;
 		Rectangle drawingBounds = getDrawingBounds(image);
-		gc.drawImage(image, 0, 0, image.getBounds().width,
-		        image.getBounds().height, drawingBounds.x, drawingBounds.y,
+		gc.drawImage(image, 0, 0, image.getBounds().width, image.getBounds().height, drawingBounds.x, drawingBounds.y,
 		        drawingBounds.width, drawingBounds.height);
 	}
 
@@ -118,8 +117,8 @@ public class GraphicalViewer extends ContentViewer {
 			return;
 		Class<?> contentProviderClass = getContentProvider().getClass();
 		try {
-			setContentProvider((IContentProvider) ConstructorUtils
-			        .invokeConstructor(contentProviderClass, new Object[0]));
+			setContentProvider((IContentProvider) ConstructorUtils.invokeConstructor(contentProviderClass,
+			        new Object[0]));
 		} catch (NoSuchMethodException e) {
 			Activator.logUnexpected(null, e);
 		} catch (IllegalAccessException e) {
@@ -156,11 +155,9 @@ public class GraphicalViewer extends ContentViewer {
 	public void setContentProvider(IContentProvider contentProvider) {
 		if (contentProvider != null) {
 			if (!(contentProvider instanceof IGraphicalContentProvider))
-				throw new IllegalArgumentException(
-				        IGraphicalContentProvider.class.getName());
+				throw new IllegalArgumentException(IGraphicalContentProvider.class.getName());
 			if (adjustToCanvas && !canvas.isDisposed())
-				((IGraphicalContentProvider) contentProvider)
-				        .setSuggestedSize(canvas.getSize());
+				((IGraphicalContentProvider) contentProvider).setSuggestedSize(canvas.getSize());
 		}
 		super.setContentProvider(contentProvider);
 	}

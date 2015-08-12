@@ -20,12 +20,10 @@ public class RenderClipboardAction implements IViewActionDelegate {
 
 	public void run(IAction action) {
 		Clipboard clipboard = new Clipboard(Display.getCurrent());
-		String contents = (String) clipboard.getContents(TextTransfer
-		        .getInstance());
+		String contents = (String) clipboard.getContents(TextTransfer.getInstance());
 		if (contents != null) {
 			view.setAutoSync(false);
-			view.setContents(contents.getBytes(),
-			        new DOTGraphicalContentProvider());
+			view.setContents(contents.getBytes(), new DOTGraphicalContentProvider());
 		}
 	}
 

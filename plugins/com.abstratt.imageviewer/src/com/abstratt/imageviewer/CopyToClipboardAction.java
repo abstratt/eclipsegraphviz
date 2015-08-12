@@ -12,7 +12,7 @@ import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 
 public class CopyToClipboardAction implements IViewActionDelegate {
-	
+
 	private GraphicalView view;
 
 	public void init(IViewPart view) {
@@ -20,12 +20,12 @@ public class CopyToClipboardAction implements IViewActionDelegate {
 	}
 
 	public void run(IAction action) {
-	    Image image = view.getViewer().getImage();
-        ImageData imageData = image.getImageData();
-	    ImageTransfer imageTransfer = ImageTransfer.getInstance();
-        Clipboard clipboard = new Clipboard(Display.getCurrent());
-        clipboard.setContents(new Object[]{imageData}, 
-                new Transfer[]{imageTransfer});
+		Image image = view.getViewer().getImage();
+		ImageData imageData = image.getImageData();
+		ImageTransfer imageTransfer = ImageTransfer.getInstance();
+		Clipboard clipboard = new Clipboard(Display.getCurrent());
+		clipboard.setContents(new Object[] { imageData },
+		        new Transfer[] { imageTransfer });
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {

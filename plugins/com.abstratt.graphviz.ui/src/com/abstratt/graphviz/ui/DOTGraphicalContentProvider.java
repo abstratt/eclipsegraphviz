@@ -18,7 +18,8 @@ import com.abstratt.imageviewer.AbstractGraphicalContentProvider;
  * A graphical content provider that produces graphical output from a DOT
  * description.
  */
-public class DOTGraphicalContentProvider extends AbstractGraphicalContentProvider {
+public class DOTGraphicalContentProvider extends
+        AbstractGraphicalContentProvider {
 
 	/*
 	 * (non-Javadoc)
@@ -27,19 +28,22 @@ public class DOTGraphicalContentProvider extends AbstractGraphicalContentProvide
 	 * com.abstratt.imageviewer.IGraphicalContentProvider#loadImage(org.eclipse
 	 * .swt.widgets.Display, org.eclipse.swt.graphics.Point, java.lang.Object)
 	 */
-	public Image loadImage(Display display, Point desiredSize, Object newInput) throws CoreException {
+	public Image loadImage(Display display, Point desiredSize, Object newInput)
+	        throws CoreException {
 		if (desiredSize == null)
 			desiredSize = new Point(0, 0);
-		byte[] imageContents = GraphViz.load(new ByteArrayInputStream((byte[]) newInput), "png", desiredSize.x, desiredSize.y);
-        // try to load the resulting image
-        ImageLoader loader = new ImageLoader();
-        ImageData[] imageData = loader.load(new ByteArrayInputStream(imageContents));
-        return new Image(Display.getDefault(), imageData[0]);
+		byte[] imageContents = GraphViz.load(new ByteArrayInputStream(
+		        (byte[]) newInput), "png", desiredSize.x, desiredSize.y);
+		// try to load the resulting image
+		ImageLoader loader = new ImageLoader();
+		ImageData[] imageData = loader.load(new ByteArrayInputStream(
+		        imageContents));
+		return new Image(Display.getDefault(), imageData[0]);
 	}
 
 	@Override
-	public void saveImage(Display display, Point suggestedSize, Object input, IPath outputLocation, int fileFormat)
-					throws CoreException {
+	public void saveImage(Display display, Point suggestedSize, Object input,
+	        IPath outputLocation, int fileFormat) throws CoreException {
 		if (suggestedSize == null)
 			suggestedSize = new Point(0, 0);
 		String outputFormat = "jpg";
@@ -57,6 +61,7 @@ public class DOTGraphicalContentProvider extends AbstractGraphicalContentProvide
 			outputFormat = "tif";
 			break;
 		}
-		GraphViz.generate(new ByteArrayInputStream((byte[]) input), outputFormat, suggestedSize.x, suggestedSize.y, outputLocation);
+		GraphViz.generate(new ByteArrayInputStream((byte[]) input),
+		        outputFormat, suggestedSize.x, suggestedSize.y, outputLocation);
 	}
 }

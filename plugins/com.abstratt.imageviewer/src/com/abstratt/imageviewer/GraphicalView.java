@@ -30,7 +30,8 @@ import com.abstratt.content.IContentProviderRegistry.IProviderDescription;
 /**
  * A view that wraps a {@link GraphicalViewer}.
  */
-public class GraphicalView extends ViewPart implements IResourceChangeListener, IPartListener2, ISelectionListener {
+public class GraphicalView extends ViewPart implements IResourceChangeListener,
+        IPartListener2, ISelectionListener {
 	public final static String VIEW_ID = "com.abstratt.imageviewer.GraphicalView";
 	private Canvas canvas;
 	private GraphicalViewer viewer;
@@ -38,7 +39,8 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	private IFile selectedFile;
 	private IProviderDescription providerDefinition;
 	/**
-	 * Whether this view should try to automatically react to changes in selection/selected object.
+	 * Whether this view should try to automatically react to changes in
+	 * selection/selected object.
 	 */
 	private boolean autoSync = true;
 
@@ -48,14 +50,14 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	public GraphicalView() {
 		//
 	}
-	
+
 	public GraphicalViewer getViewer() {
-        return viewer;
-    };
+		return viewer;
+	};
 
 	/**
-	 * This is a callback that will allow us to create the viewer and
-	 * initialize it.
+	 * This is a callback that will allow us to create the viewer and initialize
+	 * it.
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
@@ -66,12 +68,13 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 		installSelectionListener();
 		installPartListener();
 	}
-	
+
 	@Override
 	public void dispose() {
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
 		getSite().getPage().removePartListener(this);
-		getSite().getWorkbenchWindow().getSelectionService().removeSelectionListener(this);
+		getSite().getWorkbenchWindow().getSelectionService()
+		        .removeSelectionListener(this);
 		super.dispose();
 	}
 
@@ -82,7 +85,8 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	}
 
 	private void loadFromActivePart() {
-		final IWorkbenchPartReference activePartReference = getSite().getPage().getActivePartReference();
+		final IWorkbenchPartReference activePartReference = getSite().getPage()
+		        .getActivePartReference();
 		if (activePartReference != null)
 			reactToPartChange(activePartReference);
 	}
@@ -92,7 +96,8 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	}
 
 	private void installSelectionListener() {
-		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(this);
+		getSite().getWorkbenchWindow().getSelectionService()
+		        .addSelectionListener(this);
 	}
 
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
@@ -108,7 +113,8 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 		if (structured.size() != 1)
 			return;
 		Object selected = structured.getFirstElement();
-		IFile file = (IFile) Platform.getAdapterManager().getAdapter(selected, IFile.class);
+		IFile file = (IFile) Platform.getAdapterManager().getAdapter(selected,
+		        IFile.class);
 		reload(file);
 	}
 
@@ -152,16 +158,17 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 		IEditorPart editorPart = (IEditorPart) part.getPart(false);
 		if (!getViewSite().getPage().isPartVisible(editorPart))
 			return;
-		IGraphicalFileProvider graphicalSource =
-						(IGraphicalFileProvider) editorPart.getAdapter(IGraphicalFileProvider.class);
+		IGraphicalFileProvider graphicalSource = (IGraphicalFileProvider) editorPart
+		        .getAdapter(IGraphicalFileProvider.class);
 		if (graphicalSource != null)
 			selectedFile = graphicalSource.getGraphicalFile();
-		else 
+		else
 			selectedFile = null;
 		if (selectedFile == null) {
 			IFile asFile = (IFile) editorPart.getAdapter(IFile.class);
 			if (asFile == null)
-				asFile = (IFile) editorPart.getEditorInput().getAdapter(IFile.class);
+				asFile = (IFile) editorPart.getEditorInput().getAdapter(
+				        IFile.class);
 			if (asFile == null)
 				return;
 			selectedFile = asFile;
@@ -186,15 +193,18 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 			if (Platform.inDebugMode())
 				Activator.logUnexpected(null, e);
 		}
-		if (contentDescription == null || contentDescription.getContentType() == null)
+		if (contentDescription == null
+		        || contentDescription.getContentType() == null)
 			return;
-		IProviderDescription providerDefinition =
-						ContentSupport.getContentProviderRegistry().findContentProvider(
-										contentDescription.getContentType(), IGraphicalContentProvider.class);
+		IProviderDescription providerDefinition = ContentSupport
+		        .getContentProviderRegistry().findContentProvider(
+		                contentDescription.getContentType(),
+		                IGraphicalContentProvider.class);
 		if (providerDefinition == null) {
 			return;
 		}
-		IGraphicalContentProvider provider = (IGraphicalContentProvider) providerDefinition.getProvider();
+		IGraphicalContentProvider provider = (IGraphicalContentProvider) providerDefinition
+		        .getProvider();
 		setContents(providerDefinition.read(file), provider);
 		// enables support for file rendering
 		this.selectedFile = file;
@@ -205,11 +215,14 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	/**
 	 * Force feeds the contents to be shown.
 	 * 
-	 * @param contents the contents to be presented (as expected by the content provider
-	 * @param provider the graphical content provider that can render the given contents 
+	 * @param contents
+	 *            the contents to be presented (as expected by the content
+	 *            provider
+	 * @param provider
+	 *            the graphical content provider that can render the given
+	 *            contents
 	 */
-	public void setContents(Object contents,
-			IGraphicalContentProvider provider) {
+	public void setContents(Object contents, IGraphicalContentProvider provider) {
 		// assumes the general case (instead of file rendering)
 		selectedFile = null;
 		providerDefinition = null;
@@ -217,11 +230,11 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 		viewer.setInput(contents);
 		setPartName(basePartName);
 	}
-	
+
 	Object getInput() {
 		return viewer.getInput();
 	}
-	
+
 	IGraphicalContentProvider getContentProvider() {
 		return (IGraphicalContentProvider) viewer.getContentProvider();
 	}
@@ -229,7 +242,9 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	private void requestUpdate() {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
-				if (getSite() == null || !GraphicalView.this.getSite().getPage().isPartVisible(GraphicalView.this))
+				if (getSite() == null
+				        || !GraphicalView.this.getSite().getPage()
+				                .isPartVisible(GraphicalView.this))
 					// don't do anything if we are not showing
 					return;
 				reload(selectedFile);
@@ -242,7 +257,8 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 			return;
 		if (event.getDelta() == null)
 			return;
-		IResourceDelta interestingChange = event.getDelta().findMember(selectedFile.getFullPath());
+		IResourceDelta interestingChange = event.getDelta().findMember(
+		        selectedFile.getFullPath());
 		if (interestingChange != null)
 			requestUpdate();
 	}
@@ -258,19 +274,21 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	public IProviderDescription getContentProviderDescription() {
 		return providerDefinition;
 	}
-	
+
 	public IFile getSelectedFile() {
 		return selectedFile;
 	}
-	
+
 	public boolean isAutoSync() {
 		return autoSync;
 	}
-	
+
 	/**
 	 * Enables/disables the view auto-sync feature.
 	 * 
-	 * @param autoSync whether the view should auto synchronize to the current selection.
+	 * @param autoSync
+	 *            whether the view should auto synchronize to the current
+	 *            selection.
 	 */
 	public void setAutoSync(boolean autoSync) {
 		this.autoSync = autoSync;
@@ -278,19 +296,20 @@ public class GraphicalView extends ViewPart implements IResourceChangeListener, 
 	}
 
 	private void updateAutoSyncToggleButtonState() {
-		IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
-		ActionContributionItem autoSyncToggleContribution = (ActionContributionItem) toolBarManager.find("com.abstratt.imageviewer.autoUpdate");
+		IToolBarManager toolBarManager = getViewSite().getActionBars()
+		        .getToolBarManager();
+		ActionContributionItem autoSyncToggleContribution = (ActionContributionItem) toolBarManager
+		        .find("com.abstratt.imageviewer.autoUpdate");
 		if (autoSyncToggleContribution != null) {
 			IAction action = autoSyncToggleContribution.getAction();
 			action.setChecked(isAutoSync());
 		}
 	}
-	
-	
+
 	/**
 	 * Toggles the view auto-sync state.
 	 */
 	public void toggleSync() {
-		setAutoSync(!isAutoSync()) ;
+		setAutoSync(!isAutoSync());
 	}
 }

@@ -30,7 +30,8 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import com.abstratt.graphviz.GraphVizActivator;
 import com.abstratt.graphviz.GraphVizActivator.DotMethod;
 
-public class GraphVizPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
+public class GraphVizPreferencePage extends PreferencePage implements
+        IWorkbenchPreferencePage {
 	/**
 	 * Utility method that creates a radio button instance and sets the default
 	 * layout data.
@@ -54,7 +55,7 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
 	private Button specifyDotButton;
 
 	private FileBrowserField dotBrowser;
-	private Text commandLineText; 
+	private Text commandLineText;
 
 	/**
 	 * Creates the mildly complex radio buttons that the prefs dialog uses.
@@ -71,7 +72,8 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
 	 *            automatically selected.
 	 * @return The new button.
 	 */
-	private Button createButton(Group group, String label, boolean enabled, DotMethod method) {
+	private Button createButton(Group group, String label, boolean enabled,
+	        DotMethod method) {
 		Button button;
 
 		button = createRadioButton(group, label);
@@ -102,7 +104,8 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
 		layout.marginWidth = 0;
 		layout.marginHeight = 0;
 		composite.setLayout(layout);
-		composite.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_FILL | GridData.HORIZONTAL_ALIGN_FILL));
+		composite.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_FILL
+		        | GridData.HORIZONTAL_ALIGN_FILL));
 		return composite;
 	}
 
@@ -122,20 +125,21 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
 
 	/**
 	 * Creates widgets for editing the command-line extension string.
-	 *  
+	 * 
 	 * @param composite
 	 */
 	private void createCommandLineExtension(Composite composite) {
 		Group group = new Group(composite, SWT.LEFT);
 		GridLayout layout = new GridLayout();
 		group.setLayout(layout);
-		GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL);
+		GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL
+		        | GridData.GRAB_HORIZONTAL);
 		group.setLayoutData(data);
 		group.setText("Additional command line options (prepended to options automatically generated");
 		commandLineText = new Text(group, SWT.SINGLE | SWT.BORDER);
-		
-		
-		String existing = GraphVizActivator.getInstance().getCommandLineExtension();
+
+		String existing = GraphVizActivator.getInstance()
+		        .getCommandLineExtension();
 		commandLineText.setText(existing == null ? "" : existing);
 
 		data = new GridData();
@@ -149,18 +153,24 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
 		Group buttonComposite = new Group(composite, SWT.LEFT);
 		GridLayout layout = new GridLayout();
 		buttonComposite.setLayout(layout);
-		GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL);
+		GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL
+		        | GridData.GRAB_HORIZONTAL);
 		buttonComposite.setLayoutData(data);
 		buttonComposite.setText("Dot executable to use");
 
 		GraphVizActivator graphviz = GraphVizActivator.getInstance();
-		automaticDotButton = createButton(buttonComposite, "Choose Automatically", true, DotMethod.AUTO);
-		useBundledDotButton = createButton(buttonComposite, "Bundled", graphviz.hasBundledInstall(), DotMethod.BUNDLE);
+		automaticDotButton = createButton(buttonComposite,
+		        "Choose Automatically", true, DotMethod.AUTO);
+		useBundledDotButton = createButton(buttonComposite, "Bundled",
+		        graphviz.hasBundledInstall(), DotMethod.BUNDLE);
 		String detectedDotLocation = graphviz.autodetectDots();
 		final boolean dotDetected = detectedDotLocation != null;
-		String detectLabel = "Detected: " + (dotDetected ? detectedDotLocation : "(none)");
-		autodetectDotButton = createButton(buttonComposite, detectLabel, dotDetected, DotMethod.DETECT);
-		specifyDotButton = createButton(buttonComposite, "Specify Manually:", true, DotMethod.MANUAL);
+		String detectLabel = "Detected: "
+		        + (dotDetected ? detectedDotLocation : "(none)");
+		autodetectDotButton = createButton(buttonComposite, detectLabel,
+		        dotDetected, DotMethod.DETECT);
+		specifyDotButton = createButton(buttonComposite, "Specify Manually:",
+		        true, DotMethod.MANUAL);
 
 		dotBrowser = new FileBrowserField(buttonComposite) {
 			@Override
@@ -204,9 +214,13 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
 				setValid(false);
 				return;
 			} else if (!GraphVizActivator.isExecutable(dotFile))
-				setMessage(newText + " is not executable!", IMessageProvider.WARNING);
-			else if (!GraphVizActivator.DOT_FILE_NAME.equalsIgnoreCase(fileName))
-				setMessage("The file name should be " + GraphVizActivator.DOT_FILE_NAME , IMessageProvider.WARNING);
+				setMessage(newText + " is not executable!",
+				        IMessageProvider.WARNING);
+			else if (!GraphVizActivator.DOT_FILE_NAME
+			        .equalsIgnoreCase(fileName))
+				setMessage("The file name should be "
+				        + GraphVizActivator.DOT_FILE_NAME,
+				        IMessageProvider.WARNING);
 		}
 		setValid(true);
 	}
@@ -221,8 +235,10 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
 	 * selected.
 	 */
 	DotMethod getNewDotMethod() {
-		return useBundledDotButton.getSelection() ? DotMethod.BUNDLE : autodetectDotButton.getSelection()
-						? DotMethod.DETECT : specifyDotButton.getSelection() ? DotMethod.MANUAL : DotMethod.AUTO;
+		return useBundledDotButton.getSelection() ? DotMethod.BUNDLE
+		        : autodetectDotButton.getSelection() ? DotMethod.DETECT
+		                : specifyDotButton.getSelection() ? DotMethod.MANUAL
+		                        : DotMethod.AUTO;
 	}
 
 	/**

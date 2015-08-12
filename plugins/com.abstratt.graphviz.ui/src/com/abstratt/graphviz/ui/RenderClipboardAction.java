@@ -11,7 +11,7 @@ import org.eclipse.ui.IViewPart;
 import com.abstratt.imageviewer.GraphicalView;
 
 public class RenderClipboardAction implements IViewActionDelegate {
-	
+
 	private GraphicalView view;
 
 	public void init(IViewPart view) {
@@ -19,12 +19,14 @@ public class RenderClipboardAction implements IViewActionDelegate {
 	}
 
 	public void run(IAction action) {
-        Clipboard clipboard = new Clipboard(Display.getCurrent());
-        String contents = (String) clipboard.getContents(TextTransfer.getInstance());
-        if (contents != null) {
-	        view.setAutoSync(false);
-			view.setContents(contents.getBytes(), new DOTGraphicalContentProvider());
-        }
+		Clipboard clipboard = new Clipboard(Display.getCurrent());
+		String contents = (String) clipboard.getContents(TextTransfer
+		        .getInstance());
+		if (contents != null) {
+			view.setAutoSync(false);
+			view.setContents(contents.getBytes(),
+			        new DOTGraphicalContentProvider());
+		}
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {

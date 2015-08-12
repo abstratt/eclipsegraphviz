@@ -13,16 +13,19 @@ public class NodeSorter {
 
 	static class Counter {
 		int count = 0;
+
 		@Override
 		public String toString() {
 			return "" + count;
 		}
 	}
 
-	public static <N> List<N> sort(Collection<N> toSort, NodeHandler<N> nodeHandler) {
+	public static <N> List<N> sort(Collection<N> toSort,
+	        NodeHandler<N> nodeHandler) {
 		if (toSort.size() < 2)
 			return new ArrayList<N>(toSort);
-		Map<N, Counter> predecessorCounts = new HashMap<N, Counter>(toSort.size());
+		Map<N, Counter> predecessorCounts = new HashMap<N, Counter>(
+		        toSort.size());
 		for (N vertex : toSort)
 			predecessorCounts.put(vertex, new Counter());
 		for (N vertex : toSort) {
@@ -42,7 +45,8 @@ public class NodeSorter {
 					if (sorted.size() == toSort.size())
 						return sorted;
 					for (N successor : nodeHandler.next(it.getKey())) {
-						Counter predecessorCount = predecessorCounts.get(successor);
+						Counter predecessorCount = predecessorCounts
+						        .get(successor);
 						if (predecessorCount != null)
 							predecessorCount.count--;
 					}

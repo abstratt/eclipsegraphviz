@@ -6,7 +6,7 @@ import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 
 public class ToggleSyncAction implements IViewActionDelegate {
-	
+
 	private GraphicalView view;
 
 	public void init(IViewPart view) {

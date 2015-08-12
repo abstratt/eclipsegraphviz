@@ -46,12 +46,14 @@ public abstract class RegistryReader {
 	 * @return the value of the attribute or nested class element
 	 * @since 3.1
 	 */
-	public static String getClassValue(IConfigurationElement configElement, String classAttributeName) {
+	public static String getClassValue(IConfigurationElement configElement,
+	        String classAttributeName) {
 		String className = configElement.getAttribute(classAttributeName);
 		if (className != null) {
 			return className;
 		}
-		IConfigurationElement[] candidateChildren = configElement.getChildren(classAttributeName);
+		IConfigurationElement[] candidateChildren = configElement
+		        .getChildren(classAttributeName);
 		if (candidateChildren.length == 0) {
 			return null;
 		}
@@ -76,7 +78,8 @@ public abstract class RegistryReader {
 		System.arraycopy(extensions, 0, sortedExtension, 0, extensions.length);
 		Comparator<IExtension> comparer = new Comparator<IExtension>() {
 			public int compare(IExtension e1, IExtension e2) {
-				return e1.getNamespaceIdentifier().compareToIgnoreCase(e2.getNamespaceIdentifier());
+				return e1.getNamespaceIdentifier().compareToIgnoreCase(
+				        e2.getNamespaceIdentifier());
 			}
 		};
 		Arrays.sort(sortedExtension, comparer);
@@ -92,8 +95,7 @@ public abstract class RegistryReader {
 	protected void logError(IConfigurationElement element, String text) {
 		IExtension extension = element.getDeclaringExtension();
 		StringBuffer buf = new StringBuffer();
-		buf
-						.append("Plugin " + extension.getContributor().getName() + ", extension " + extension.getExtensionPointUniqueIdentifier());//$NON-NLS-2$//$NON-NLS-1$
+		buf.append("Plugin " + extension.getContributor().getName() + ", extension " + extension.getExtensionPointUniqueIdentifier());//$NON-NLS-2$//$NON-NLS-1$
 		buf.append("\n" + text);//$NON-NLS-1$
 		LogUtils.logError(getNamespace(), buf.toString(), null);
 	}
@@ -101,15 +103,19 @@ public abstract class RegistryReader {
 	/**
 	 * Logs a very common registry error when a required attribute is missing.
 	 */
-	protected void logMissingAttribute(IConfigurationElement element, String attributeName) {
-		logError(element, "Required attribute '" + attributeName + "' not defined");//$NON-NLS-2$//$NON-NLS-1$
+	protected void logMissingAttribute(IConfigurationElement element,
+	        String attributeName) {
+		logError(element,
+		        "Required attribute '" + attributeName + "' not defined");//$NON-NLS-2$//$NON-NLS-1$
 	}
 
 	/**
 	 * Logs a very common registry error when a required child is missing.
 	 */
-	protected void logMissingElement(IConfigurationElement element, String elementName) {
-		logError(element, "Required sub element '" + elementName + "' not defined");//$NON-NLS-2$//$NON-NLS-1$
+	protected void logMissingElement(IConfigurationElement element,
+	        String elementName) {
+		logError(element,
+		        "Required sub element '" + elementName + "' not defined");//$NON-NLS-2$//$NON-NLS-1$
 	}
 
 	/**

@@ -10,7 +10,7 @@ public class PlaceholderProviderDescription implements IProviderDescription {
 	private IContentProvider contentProvider;
 
 	public PlaceholderProviderDescription(Object input,
-			IContentProvider contentProvider) {
+	        IContentProvider contentProvider) {
 		this.input = input;
 		this.contentProvider = contentProvider;
 	}

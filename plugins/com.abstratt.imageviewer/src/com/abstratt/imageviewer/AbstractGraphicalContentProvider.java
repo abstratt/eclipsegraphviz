@@ -22,19 +22,22 @@ import org.eclipse.swt.widgets.Display;
 import com.abstratt.pluginutils.LogUtils;
 
 public abstract class AbstractGraphicalContentProvider implements
-		IGraphicalContentProvider {
+        IGraphicalContentProvider {
 
 	private Image image;
 
 	private Point suggestedSize;
 
 	private ContentLoader loaderJob = new ContentLoader();
-	
-	public final static ISchedulingRule CONTENT_LOADING_RULE = new  ISchedulingRule() {
+
+	public final static ISchedulingRule CONTENT_LOADING_RULE = new ISchedulingRule() {
 
 		/*
 		 * (non-Javadoc)
-		 * @see org.eclipse.core.runtime.jobs.ISchedulingRule#contains(org.eclipse.core.runtime.jobs.ISchedulingRule)
+		 * 
+		 * @see
+		 * org.eclipse.core.runtime.jobs.ISchedulingRule#contains(org.eclipse
+		 * .core.runtime.jobs.ISchedulingRule)
 		 */
 		public boolean contains(ISchedulingRule rule) {
 			return rule == this;
@@ -42,14 +45,17 @@ public abstract class AbstractGraphicalContentProvider implements
 
 		/*
 		 * (non-Javadoc)
-		 * @see org.eclipse.core.runtime.jobs.ISchedulingRule#isConflicting(org.eclipse.core.runtime.jobs.ISchedulingRule)
+		 * 
+		 * @see
+		 * org.eclipse.core.runtime.jobs.ISchedulingRule#isConflicting(org.eclipse
+		 * .core.runtime.jobs.ISchedulingRule)
 		 */
 		public boolean isConflicting(ISchedulingRule rule) {
 			return rule == this;
 		}
-		
+
 	};
-	
+
 	class ContentLoader extends Job {
 
 		private static final long IMAGE_LOAD_DELAY = 100;
@@ -71,14 +77,15 @@ public abstract class AbstractGraphicalContentProvider implements
 				if (monitor.isCanceled())
 					return Status.CANCEL_STATUS;
 				disposeImage();
-				monitor.worked(50); 
+				monitor.worked(50);
 				try {
-					setImage(AbstractGraphicalContentProvider.this.loadImage(Display
-							.getDefault(), getSuggestedSize(), input));
+					setImage(AbstractGraphicalContentProvider.this.loadImage(
+					        Display.getDefault(), getSuggestedSize(), input));
 				} catch (CoreException e) {
 					if (!e.getStatus().isOK())
 						LogUtils.log(e.getStatus());
-					setImage(createErrorImage(Display.getDefault(), getSuggestedSize(), e.getStatus()));
+					setImage(createErrorImage(Display.getDefault(),
+					        getSuggestedSize(), e.getStatus()));
 				}
 				if (monitor.isCanceled())
 					return Status.CANCEL_STATUS;
@@ -107,7 +114,8 @@ public abstract class AbstractGraphicalContentProvider implements
 			// first cancel any competing image loading jobs
 			getJobManager().cancel(JOB_FAMILY);
 			this.input = input;
-			if (viewer.getControl().isDisposed() || !viewer.getControl().isVisible())
+			if (viewer.getControl().isDisposed()
+			        || !viewer.getControl().isVisible())
 				return;
 			this.viewer = viewer;
 			schedule(IMAGE_LOAD_DELAY);
@@ -116,6 +124,7 @@ public abstract class AbstractGraphicalContentProvider implements
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
 	 */
 	public void dispose() {
@@ -143,7 +152,7 @@ public abstract class AbstractGraphicalContentProvider implements
 	private String renderMessage(IStatus status, StringBuffer output) {
 		output.append(status.getMessage());
 		if (status.getException() != null)
-			output.append("\n"+status.getException());
+			output.append("\n" + status.getException());
 		for (IStatus child : status.getChildren()) {
 			output.append("\n");
 			renderMessage(child, output);
@@ -167,7 +176,7 @@ public abstract class AbstractGraphicalContentProvider implements
 	}
 
 	public final void inputChanged(final Viewer viewer, Object oldInput,
-			final Object newInput) {
+	        final Object newInput) {
 		disposeImage();
 		if (newInput != null)
 			loaderJob.asyncLoadImage(newInput, viewer);
@@ -180,17 +189,19 @@ public abstract class AbstractGraphicalContentProvider implements
 	protected void reload() {
 		this.loaderJob.schedule(200);
 	}
-	
-	public abstract Image loadImage(Display display, Point suggestedSize, Object newInput) throws CoreException;
-	
+
+	public abstract Image loadImage(Display display, Point suggestedSize,
+	        Object newInput) throws CoreException;
+
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * This default implementation relies on the {@link #loadImage(Display, Point, Object)} method, subclasses
-	 * are encouraged to provide a more efficient implementation. 
+	 * This default implementation relies on the
+	 * {@link #loadImage(Display, Point, Object)} method, subclasses are
+	 * encouraged to provide a more efficient implementation.
 	 */
-	public void saveImage(Display display, Point suggestedSize, Object input, IPath location, int fileFormat)
-					throws CoreException {
+	public void saveImage(Display display, Point suggestedSize, Object input,
+	        IPath location, int fileFormat) throws CoreException {
 		Image toSave = loadImage(Display.getDefault(), new Point(0, 0), input);
 		try {
 			ImageLoader imageLoader = new ImageLoader();
@@ -198,9 +209,11 @@ public abstract class AbstractGraphicalContentProvider implements
 			ByteArrayOutputStream buffer = new ByteArrayOutputStream(200 * 1024);
 			imageLoader.save(buffer, fileFormat);
 			try {
-				FileUtils.writeByteArrayToFile(location.toFile(), buffer.toByteArray());
+				FileUtils.writeByteArrayToFile(location.toFile(),
+				        buffer.toByteArray());
 			} catch (IOException e) {
-				throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error saving image", e));
+				throw new CoreException(new Status(IStatus.ERROR,
+				        Activator.PLUGIN_ID, "Error saving image", e));
 			}
 		} finally {
 			toSave.dispose();

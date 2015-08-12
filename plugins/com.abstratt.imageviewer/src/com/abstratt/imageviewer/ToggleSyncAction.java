@@ -7,17 +7,17 @@ import org.eclipse.ui.IViewPart;
 
 public class ToggleSyncAction implements IViewActionDelegate {
 
-	private GraphicalView view;
+    private GraphicalView view;
 
-	public void init(IViewPart view) {
-		this.view = (GraphicalView) view;
-	}
+    public void init(IViewPart view) {
+        this.view = (GraphicalView) view;
+    }
 
-	public void run(IAction action) {
-		this.view.toggleSync();
-	}
+    public void run(IAction action) {
+        this.view.toggleSync();
+    }
 
-	public void selectionChanged(IAction action, ISelection selection) {
-		// don't care
-	}
+    public void selectionChanged(IAction action, ISelection selection) {
+        // don't care
+    }
 }

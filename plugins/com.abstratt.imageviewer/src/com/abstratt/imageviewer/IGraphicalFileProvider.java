@@ -7,5 +7,5 @@ import org.eclipse.core.resources.IFile;
  * a file containing graphical contents.
  */
 public interface IGraphicalFileProvider {
-	public IFile getGraphicalFile();
+    public IFile getGraphicalFile();
 }

@@ -11,27 +11,27 @@ import com.abstratt.pluginutils.LogUtils;
  */
 public class Activator implements BundleActivator {
 
-	public static void logUnexpected(String message, Exception e) {
-		LogUtils.logError(ContentSupport.PLUGIN_ID, message, e);
-	}
+    public static void logUnexpected(String message, Exception e) {
+        LogUtils.logError(ContentSupport.PLUGIN_ID, message, e);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.core.runtime.Plugins#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext context) throws Exception {
-		// just to initialize the content provider registry in a thread-safe way
-		ContentSupport.getContentProviderRegistry();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.core.runtime.Plugins#start(org.osgi.framework.BundleContext)
+     */
+    public void start(BundleContext context) throws Exception {
+        // just to initialize the content provider registry in a thread-safe way
+        ContentSupport.getContentProviderRegistry();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext context) throws Exception {
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
+     */
+    public void stop(BundleContext context) throws Exception {
+    }
 }

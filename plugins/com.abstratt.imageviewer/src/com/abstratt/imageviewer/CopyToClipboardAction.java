@@ -13,22 +13,22 @@ import org.eclipse.ui.IViewPart;
 
 public class CopyToClipboardAction implements IViewActionDelegate {
 
-	private GraphicalView view;
+    private GraphicalView view;
 
-	public void init(IViewPart view) {
-		this.view = (GraphicalView) view;
-	}
+    public void init(IViewPart view) {
+        this.view = (GraphicalView) view;
+    }
 
-	public void run(IAction action) {
-		Image image = view.getViewer().getImage();
-		ImageData imageData = image.getImageData();
-		ImageTransfer imageTransfer = ImageTransfer.getInstance();
-		Clipboard clipboard = new Clipboard(Display.getCurrent());
-		clipboard.setContents(new Object[] { imageData }, new Transfer[] { imageTransfer });
-	}
+    public void run(IAction action) {
+        Image image = view.getViewer().getImage();
+        ImageData imageData = image.getImageData();
+        ImageTransfer imageTransfer = ImageTransfer.getInstance();
+        Clipboard clipboard = new Clipboard(Display.getCurrent());
+        clipboard.setContents(new Object[] { imageData }, new Transfer[] { imageTransfer });
+    }
 
-	public void selectionChanged(IAction action, ISelection selection) {
-		// don't care
-	}
+    public void selectionChanged(IAction action, ISelection selection) {
+        // don't care
+    }
 
 }

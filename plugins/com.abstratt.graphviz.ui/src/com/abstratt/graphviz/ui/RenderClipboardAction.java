@@ -12,23 +12,23 @@ import com.abstratt.imageviewer.GraphicalView;
 
 public class RenderClipboardAction implements IViewActionDelegate {
 
-	private GraphicalView view;
+    private GraphicalView view;
 
-	public void init(IViewPart view) {
-		this.view = (GraphicalView) view;
-	}
+    public void init(IViewPart view) {
+        this.view = (GraphicalView) view;
+    }
 
-	public void run(IAction action) {
-		Clipboard clipboard = new Clipboard(Display.getCurrent());
-		String contents = (String) clipboard.getContents(TextTransfer.getInstance());
-		if (contents != null) {
-			view.setAutoSync(false);
-			view.setContents(contents.getBytes(), new DOTGraphicalContentProvider());
-		}
-	}
+    public void run(IAction action) {
+        Clipboard clipboard = new Clipboard(Display.getCurrent());
+        String contents = (String) clipboard.getContents(TextTransfer.getInstance());
+        if (contents != null) {
+            view.setAutoSync(false);
+            view.setContents(contents.getBytes(), new DOTGraphicalContentProvider());
+        }
+    }
 
-	public void selectionChanged(IAction action, ISelection selection) {
-		// don't care
-	}
+    public void selectionChanged(IAction action, ISelection selection) {
+        // don't care
+    }
 
 }

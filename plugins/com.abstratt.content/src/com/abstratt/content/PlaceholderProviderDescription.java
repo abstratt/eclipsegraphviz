@@ -6,22 +6,22 @@ import com.abstratt.content.IContentProviderRegistry.IProviderDescription;
 
 public class PlaceholderProviderDescription implements IProviderDescription {
 
-	private Object input;
-	private IContentProvider contentProvider;
+    private Object input;
+    private IContentProvider contentProvider;
 
-	public PlaceholderProviderDescription(Object input, IContentProvider contentProvider) {
-		this.input = input;
-		this.contentProvider = contentProvider;
-	}
+    public PlaceholderProviderDescription(Object input, IContentProvider contentProvider) {
+        this.input = input;
+        this.contentProvider = contentProvider;
+    }
 
-	@Override
-	public IContentProvider getProvider() {
-		return contentProvider;
-	}
+    @Override
+    public IContentProvider getProvider() {
+        return contentProvider;
+    }
 
-	@Override
-	public Object read(Object source) {
-		return input;
-	}
+    @Override
+    public Object read(Object source) {
+        return input;
+    }
 
 }

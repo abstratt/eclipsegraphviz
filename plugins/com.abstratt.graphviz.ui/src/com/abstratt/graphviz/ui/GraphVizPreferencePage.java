@@ -131,7 +131,7 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
         group.setLayout(layout);
         GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL);
         group.setLayoutData(data);
-        group.setText("Additional command line options (prepended to options automatically generated");
+        group.setText("Additional command line options (prepended to options automatically generated)");
         commandLineText = new Text(group, SWT.SINGLE | SWT.BORDER);
 
         String existing = GraphVizActivator.getInstance().getCommandLineExtension();

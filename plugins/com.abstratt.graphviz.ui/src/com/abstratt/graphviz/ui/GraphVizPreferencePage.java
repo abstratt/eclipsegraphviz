@@ -49,8 +49,6 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
     }
 
     private Button automaticDotButton;
-    private Button useBundledDotButton;
-    private Button autodetectDotButton;
     private Button specifyDotButton;
 
     private FileBrowserField dotBrowser;
@@ -153,12 +151,9 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
         buttonComposite.setText("Dot executable to use");
 
         GraphVizActivator graphviz = GraphVizActivator.getInstance();
-        automaticDotButton = createButton(buttonComposite, "Choose Automatically", true, DotMethod.AUTO);
-        useBundledDotButton = createButton(buttonComposite, "Bundled", graphviz.hasBundledInstall(), DotMethod.BUNDLE);
         String detectedDotLocation = graphviz.autodetectDots();
         final boolean dotDetected = detectedDotLocation != null;
-        String detectLabel = "Detected: " + (dotDetected ? detectedDotLocation : "(none)");
-        autodetectDotButton = createButton(buttonComposite, detectLabel, dotDetected, DotMethod.DETECT);
+        automaticDotButton = createButton(buttonComposite, "Found in PATH variable: " + (dotDetected ? detectedDotLocation : "(none)"), true, DotMethod.AUTO);
         specifyDotButton = createButton(buttonComposite, "Specify Manually:", true, DotMethod.MANUAL);
 
         dotBrowser = new FileBrowserField(buttonComposite) {
@@ -220,9 +215,7 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
      * selected.
      */
     DotMethod getNewDotMethod() {
-        return useBundledDotButton.getSelection() ? DotMethod.BUNDLE
-                : autodetectDotButton.getSelection() ? DotMethod.DETECT
-                        : specifyDotButton.getSelection() ? DotMethod.MANUAL : DotMethod.AUTO;
+        return specifyDotButton.getSelection() ? DotMethod.MANUAL : DotMethod.AUTO;
     }
 
     /**
@@ -238,8 +231,6 @@ public class GraphVizPreferencePage extends PreferencePage implements IWorkbench
     protected void performDefaults() {
         DotMethod dotMethod = DotMethod.AUTO;
         automaticDotButton.setSelection(dotMethod == DotMethod.AUTO);
-        useBundledDotButton.setSelection(dotMethod == DotMethod.BUNDLE);
-        autodetectDotButton.setSelection(dotMethod == DotMethod.DETECT);
         specifyDotButton.setSelection(dotMethod == DotMethod.MANUAL);
         dotBrowser.setText("");
         commandLineText.setText("");

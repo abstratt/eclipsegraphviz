@@ -13,17 +13,11 @@ package com.abstratt.graphviz;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
-import java.util.Enumeration;
 
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.framework.BundleActivator;
@@ -41,7 +35,7 @@ public class GraphVizActivator implements BundleActivator {
      * remain human readable.
      */
     public enum DotMethod {
-        AUTO, BUNDLE, DETECT, MANUAL;
+        AUTO, MANUAL;
 
         /**
          * Given a string, looks up the corresponding DotMethod. If no match,
@@ -95,19 +89,12 @@ public class GraphVizActivator implements BundleActivator {
     }
 
     // store paths as strings so they won't get screwed up by platform issues.
-    /**
-     * Path to bundled dot or null if it can't be found. See
-     * extractGraphVizBinaries().
-     */
-    private String bundledDotLocation;
 
     /**
      * Path to autodetected dot or null if it can't be found. See
      * autodetectDots().
      */
     private String autodetectedDotLocation;
-
-    private String commandLine;
 
     /**
      * The path the bundled Graphviz install was extracted to (null if not
@@ -157,37 +144,6 @@ public class GraphVizActivator implements BundleActivator {
         }
     }
 
-    /**
-     * Tries to find and (if required) extract the binaries for a bundled
-     * Graphviz install. If cannot find, the Graphviz integration will only work
-     * if the ... ?
-     * 
-     * @param context
-     * @throws IOException
-     */
-    private String extractGraphVizBinaries(BundleContext context) throws IOException {
-        Enumeration<?> found = context.getBundle().findEntries("/graphviz-min/", "eg_dot*", false);
-        if (found == null || !found.hasMoreElements()) {
-            return null;
-        }
-
-        URL dotURL = (URL) found.nextElement();
-        URL basicURL = new URL(dotURL, ".");
-        URL fileURL = FileLocator.toFileURL(basicURL);
-        if (!fileURL.getProtocol().startsWith("file")) {
-            IStatus bundledBinariesStatus = new Status(IStatus.ERROR, ID,
-                    "Unexpected protocol for location of GraphViz binaries: '" + fileURL + "'");
-            Platform.getLog(context.getBundle()).log(bundledBinariesStatus);
-            return null;
-        }
-        bundledDotLocation = FileLocator.toFileURL(dotURL).getPath();
-        return bundledDotLocation;
-    }
-
-    public String getBundledDotLocation() {
-        return bundledDotLocation;
-    }
-
     // preference getters and setters
 
     /**
@@ -196,28 +152,15 @@ public class GraphVizActivator implements BundleActivator {
      */
     public IPath getDotLocation() {
         final String manualLocation = getManualDotPath();
-        switch (getDotSearchMethod()) {
+        DotMethod dotSearchMethod = getDotSearchMethod();
+		switch (dotSearchMethod) {
         case AUTO:
-            if (bundledDotLocation != null)
-                return new Path(bundledDotLocation);
-            if (autodetectedDotLocation != null)
-                return new Path(autodetectedDotLocation);
-            return manualLocation != null ? new Path(manualLocation) : null;
-
-        case BUNDLE:
-            return bundledDotLocation != null ? new Path(bundledDotLocation) : null;
-
-        case DETECT:
-            return autodetectedDotLocation != null ? new Path(autodetectedDotLocation) : null;
-
+        	return autodetectedDotLocation != null ? new Path(autodetectedDotLocation) : null;
         case MANUAL:
             return manualLocation != null ? new Path(manualLocation) : null;
         }
-
-        // Someone must have edited the prefs file manually... just reset the
-        // value.
-        setDotSearchMethod(DotMethod.AUTO);
-        return null;
+        // can't never get here
+        throw new IllegalStateException("Unexpected value for dotSearchMethod: " + dotSearchMethod);
     }
 
     public DotMethod getDotSearchMethod() {
@@ -249,10 +192,6 @@ public class GraphVizActivator implements BundleActivator {
         return node.get(preference_name, null);
     }
 
-    public boolean hasBundledInstall() {
-        return bundledDotLocation != null;
-    }
-
     public void setDotSearchMethod(DotMethod dotMethod) {
         setPreference(DOT_SEARCH_METHOD, dotMethod.name());
     }
@@ -265,8 +204,9 @@ public class GraphVizActivator implements BundleActivator {
     public void setPreference(String preferenceName, String value) {
         IEclipsePreferences root = Platform.getPreferencesService().getRootNode();
         Preferences node = root.node(InstanceScope.SCOPE).node(GraphVizActivator.ID);
-        node.put(preferenceName, value);
         try {
+            node.sync();
+            node.put(preferenceName, value);
             node.flush();
         } catch (BackingStoreException e) {
             LogUtils.logError(ID, "Error updating preferences.", e);
@@ -274,19 +214,11 @@ public class GraphVizActivator implements BundleActivator {
     }
 
     public void start(BundleContext context) throws Exception {
-        // try to find a bundled dot.
-        try {
-            extractGraphVizBinaries(context);
-        } catch (IOException e) {
-            LogUtils.logError(ID, "Error looking for dot executable.", e);
-        }
-
-        // then try to find any installed copies of dot
+        // try to find any installed copies of dot
         autodetectDots();
         if (autodetectedDotLocation != null) {
             LogUtils.logInfo(getClass().getPackage().getName(), "Detected dot at " + autodetectedDotLocation, null);
-        } else if (getDotSearchMethod() == DotMethod.DETECT) {
-            setDotSearchMethod(DotMethod.AUTO);
+        } else if (getDotSearchMethod() == DotMethod.AUTO) {
             LogUtils.logWarning(
                     ID,
                     "Could not find a suitable dot executable.  Please specify one using Window -> Preferences -> Graphviz.",

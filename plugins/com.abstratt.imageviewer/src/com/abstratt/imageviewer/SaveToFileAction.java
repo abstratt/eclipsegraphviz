@@ -1,8 +1,6 @@
 package com.abstratt.imageviewer;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -24,18 +22,9 @@ import org.eclipse.ui.IViewPart;
 
 import com.abstratt.content.IContentProviderRegistry.IProviderDescription;
 import com.abstratt.content.PlaceholderProviderDescription;
+import com.abstratt.imageviewer.IGraphicalContentProvider.GraphicFileFormat;
 
 public class SaveToFileAction implements IViewActionDelegate {
-
-    private static final String[] VALID_EXTENSIONS = { "jpg", "png", "gif", "tif", "bmp" };
-    private static final int[] VALID_FORMATS = { SWT.IMAGE_JPEG, SWT.IMAGE_PNG, SWT.IMAGE_GIF, SWT.IMAGE_TIFF,
-            SWT.IMAGE_BMP };
-    private static final String[] VALID_EXTENSION_MASKS;
-    static {
-        VALID_EXTENSION_MASKS = new String[VALID_FORMATS.length];
-        for (int i = 0; i < VALID_EXTENSION_MASKS.length; i++)
-            VALID_EXTENSION_MASKS[i] = "*." + VALID_EXTENSIONS[i];
-    }
 
     private GraphicalView view;
 
@@ -45,8 +34,10 @@ public class SaveToFileAction implements IViewActionDelegate {
 
     public void run(IAction action) {
         IProviderDescription providerDefinition = view.getContentProviderDescription();
+        IGraphicalContentProvider contentProvider = view.getContentProvider();
         if (providerDefinition == null)
-            providerDefinition = new PlaceholderProviderDescription(view.getInput(), view.getContentProvider());
+			providerDefinition = new PlaceholderProviderDescription(view.getInput(), contentProvider);
+        
         IFile selectedFile = view.getSelectedFile();
         String suggestedName;
         if (selectedFile == null)
@@ -55,12 +46,12 @@ public class SaveToFileAction implements IViewActionDelegate {
             suggestedName = selectedFile.getLocation().removeFileExtension().lastSegment();
         boolean pathIsValid = false;
         IPath path = null;
-        int fileFormat = 0;
+        GraphicFileFormat fileFormat = null;
         while (!pathIsValid) {
             FileDialog saveDialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
             saveDialog.setText("Choose a location to save to");
             saveDialog.setFileName(suggestedName);
-            saveDialog.setFilterExtensions(VALID_EXTENSION_MASKS);
+            saveDialog.setFilterExtensions(contentProvider.getSupportedFormats().stream().map(it -> "*." + it.getExtension()).toArray(s -> new String[s]));
             String pathString = saveDialog.open();
             if (pathString == null)
                 return;
@@ -69,14 +60,12 @@ public class SaveToFileAction implements IViewActionDelegate {
                 MessageDialog.openError(null, "Invalid file path", "Location is already in use by a directory");
                 continue;
             }
-            String extension = path.getFileExtension();
-            List<String> validExtensionsList = Arrays.asList(VALID_EXTENSIONS);
-            if (extension == null || !validExtensionsList.contains(extension.toLowerCase())) {
+            fileFormat = GraphicFileFormat.byExtension(path.getFileExtension()); 
+            if (fileFormat == null) {
                 MessageDialog.openError(null, "Invalid file extension", "Supported file formats are: "
-                        + validExtensionsList);
+                        + contentProvider.getSupportedFormats().toString());
                 continue;
             }
-            fileFormat = VALID_FORMATS[validExtensionsList.indexOf(extension.toLowerCase())];
             File parentDir = path.toFile().getParentFile();
             parentDir.mkdirs();
             if (parentDir.isDirectory())
@@ -92,9 +81,9 @@ public class SaveToFileAction implements IViewActionDelegate {
 
         private IProviderDescription providerDefinition;
         private IPath path;
-        private int fileFormat;
+        private GraphicFileFormat fileFormat;
 
-        public SaveImageJob(int fileFormat, IPath path, IProviderDescription providerDefinition) {
+        public SaveImageJob(GraphicFileFormat fileFormat, IPath path, IProviderDescription providerDefinition) {
             super("Image saving job");
             this.fileFormat = fileFormat;
             this.path = path;

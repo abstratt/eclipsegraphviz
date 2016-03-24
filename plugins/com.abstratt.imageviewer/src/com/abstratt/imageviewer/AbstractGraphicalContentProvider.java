@@ -12,6 +12,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -195,14 +196,15 @@ public abstract class AbstractGraphicalContentProvider implements IGraphicalCont
      * {@link #loadImage(Display, Point, Object)} method, subclasses are
      * encouraged to provide a more efficient implementation.
      */
-    public void saveImage(Display display, Point suggestedSize, Object input, IPath location, int fileFormat)
+    public void saveImage(Display display, Point suggestedSize, Object input, IPath location, GraphicFileFormat fileFormat)
             throws CoreException {
+    	int swtFileFormat = getSWTFileFormat(fileFormat);
         Image toSave = loadImage(Display.getDefault(), new Point(0, 0), input);
         try {
             ImageLoader imageLoader = new ImageLoader();
             imageLoader.data = new ImageData[] { toSave.getImageData() };
             ByteArrayOutputStream buffer = new ByteArrayOutputStream(200 * 1024);
-            imageLoader.save(buffer, fileFormat);
+            imageLoader.save(buffer, swtFileFormat);
             try {
                 FileUtils.writeByteArrayToFile(location.toFile(), buffer.toByteArray());
             } catch (IOException e) {
@@ -212,4 +214,20 @@ public abstract class AbstractGraphicalContentProvider implements IGraphicalCont
             toSave.dispose();
         }
     }
+
+	private int getSWTFileFormat(GraphicFileFormat fileFormat) {
+		switch (fileFormat) {
+		case BITMAP:
+			return SWT.IMAGE_BMP;
+		case GIF:
+			return SWT.IMAGE_GIF;
+		case JPEG:
+			return SWT.IMAGE_JPEG;
+		case TIFF:
+			return SWT.IMAGE_TIFF;
+		case PNG:
+		default:
+			return SWT.IMAGE_PNG;
+		}
+	}
 }

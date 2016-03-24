@@ -1,10 +1,13 @@
 package com.abstratt.graphviz.ui;
 
+import static com.abstratt.imageviewer.IGraphicalContentProvider.GraphicFileFormat.*;
+
 import java.io.ByteArrayInputStream;
+import java.util.EnumSet;
+import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
@@ -39,26 +42,17 @@ public class DOTGraphicalContentProvider extends AbstractGraphicalContentProvide
     }
 
     @Override
-    public void saveImage(Display display, Point suggestedSize, Object input, IPath outputLocation, int fileFormat)
+    public void saveImage(Display display, Point suggestedSize, Object input, IPath outputLocation, GraphicFileFormat fileFormat)
             throws CoreException {
         if (suggestedSize == null)
             suggestedSize = new Point(0, 0);
-        String outputFormat = "jpg";
-        switch (fileFormat) {
-        case SWT.IMAGE_GIF:
-            outputFormat = "gif";
-            break;
-        case SWT.IMAGE_PNG:
-            outputFormat = "png";
-            break;
-        case SWT.IMAGE_BMP:
-            outputFormat = "bmp";
-            break;
-        case SWT.IMAGE_TIFF:
-            outputFormat = "tif";
-            break;
-        }
+        String outputFormat = fileFormat.getExtension();
         GraphViz.generate(new ByteArrayInputStream((byte[]) input), outputFormat, suggestedSize.x, suggestedSize.y,
                 outputLocation);
+    }
+    
+    @Override
+	public Set<GraphicFileFormat> getSupportedFormats() {
+    	return EnumSet.of(BITMAP, GIF, TIFF, JPEG, PNG, SVG, DOT);
     }
 }

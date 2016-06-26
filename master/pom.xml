@@ -3,21 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.abstratt</groupId>
 	<artifactId>master</artifactId>
-	<version>1.5</version>
+	<version>1.6</version>
 	<packaging>pom</packaging>
 	<properties>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tycho-version>0.21.0</tycho-version>
+		<tycho-version>0.25.0</tycho-version>
 	</properties>
-
-<pluginRepositories>
- <pluginRepository>
-  <id>tycho-staged</id>
-  <url>https://oss.sonatype.org/content/repositories/orgeclipsetycho-1018/</url>
- </pluginRepository>
-</pluginRepositories>
-
-
 
   <build>
        <pluginManagement>

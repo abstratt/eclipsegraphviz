@@ -33,7 +33,7 @@ client installed, that is the easiest way to install EclipseGraphviz. Just searc
     JAR URL in the "Work with:" field (include jar: to the !/ at the
     end):
 
-<pre>jar:http://repository-textuml.forge.cloudbees.com/snapshot/com/abstratt/mdd/com.abstratt.mdd.oss.repository/2.1/com.abstratt.mdd.oss.repository-2.1.zip!/</pre>
+<pre>jar:http://repository-textuml.forge.cloudbees.com/snapshot/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.2.201606/com.abstratt.eclipsegraphviz.repository-2.2.201606.zip!/</pre>
 
 -   Select the EclipseGraphviz feature from the Modeling category.
 

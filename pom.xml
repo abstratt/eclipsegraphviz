@@ -10,6 +10,18 @@
 		<groupId>com.abstratt</groupId>
 		<version>1.6</version>
 	</parent>
+	
+	<repositories>
+		<repository>
+			<id>Abstratt-OSS</id>
+			<name>Abstratt OSS Repo</name>
+			<url>http://repository-textuml.forge.cloudbees.com/snapshot/</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<modules>
 		<module>plugins/com.abstratt.pluginutils</module>

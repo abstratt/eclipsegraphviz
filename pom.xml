@@ -9,7 +9,6 @@
 		<artifactId>master</artifactId>
 		<groupId>com.abstratt</groupId>
 		<version>1.6</version>
-		<relativePath>master</relativePath>
 	</parent>
 
 	<modules>

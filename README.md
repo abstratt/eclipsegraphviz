@@ -6,15 +6,15 @@ This is the home for the EclipseGraphviz project, originally on SourceForge.
 
 EclipseGraphviz is an Eclipse plug-in that provides a Java API for Graphviz and an Image Viewer view that allows easily visualizing the graphical output of your .dot files as you save changes to them.
 
-#Installing EclipseGraphviz
+# Installing EclipseGraphviz
 
-###Requirements
+### Requirements
 
 -   Java 8
 -   Eclipse Luna or later
 -   Graphviz
 
-###Install Eclipse
+### Install Eclipse
 
 -   If you don't have Eclipse Luna or newer, install it from
     [http://eclipse.org/downloads/](http://eclipse.org/downloads/ "http://eclipse.org/downloads/")
@@ -26,7 +26,7 @@ If you have the [Eclipse
 Marketplace](http://marketplace.eclipse.org/marketplace-client-intro "http://marketplace.eclipse.org/marketplace-client-intro")
 client installed, that is the easiest way to install EclipseGraphviz. Just search for the "TextUML Toolkit" (EclipseGraphviz ships as part of it), and install it directly. You can install EclipseGraphviz and skip installing the TextUML Toolkit if you prefer ([what is the TextUML Toolkit?](http://abstratt.com/textuml)). 
 
-####Method 2: Installation via Update Manager 
+#### Method 2: Installation via Update Manager 
 -   Open the [Software
     Updates](http://help.eclipse.org/stable/topic/org.eclipse.platform.doc.user/tasks/tasks-121.htm "http://help.eclipse.org/stable/topic/org.eclipse.platform.doc.user/tasks/tasks-121.htm")
     dialog (Help \> Install New Software...), and enter the following
@@ -40,7 +40,7 @@ client installed, that is the easiest way to install EclipseGraphviz. Just searc
 -   Accept to restart Eclipse to make the changes effective.
 
 
-###Download and install Graphviz
+### Download and install Graphviz
 If you don't have it yet, download and install
 [Graphviz](http://graphviz.org/Download.php "http://graphviz.org/Download.php")
 for your platform.
@@ -53,12 +53,12 @@ page](http://graphviz.org/Download_windows.php "http://graphviz.org/Download_win
 From user reports, it seems XP usually requires that package to be
 installed, while Vista does not*.
 
-###Configure EclipseGraphviz
+### Configure EclipseGraphviz
 Once Graphviz is installed, you may need to tell EclipseGraphviz where to
 find it. Open the Graphviz preference page in Eclipse and enter the
 location for the dot executable.
 
-#Using EclipseGraphviz
+# Using EclipseGraphviz
 
 ### How are diagrams rendered?
 

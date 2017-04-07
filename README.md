@@ -39,7 +39,24 @@ client installed, that is the easiest way to install EclipseGraphviz. Just searc
 
 -   Accept to restart Eclipse to make the changes effective.
 
+#### Method 3: Manual download and install from local archived repository
 
+Some strict proxies may prevent that applications (such as Eclipse) from downloading .zip files (such as the EclipseGraphviz repository). For example, if you consistently see the Eclipse Marketplace client (method 1) or Update Manager (method 2) failing with errors like these:
+```
+Communication with repository at jar:http://repository-textuml.forge.cloudbees.com/snapshot/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.2.201606/com.abstratt.eclipsegraphviz.repository-2.2.201606.zip!/content.xml.xz failed.
+root cause
+Caused by: java.net.SocketTimeoutException: Read timed out
+```
+In that case:
+
+-    download the EclipseGraphviz repository archive from [here](http://repository-textuml.forge.cloudbees.com/snapshot/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.2.201606/com.abstratt.eclipsegraphviz.repository-2.2.201606.zip)
+-   Open the [Software
+    Updates](http://help.eclipse.org/stable/topic/org.eclipse.platform.doc.user/tasks/tasks-121.htm "http://help.eclipse.org/stable/topic/org.eclipse.platform.doc.user/tasks/tasks-121.htm")
+    dialog (Help \> Install New Software...), hit the Add... button, then use the "Archive..." button to find the zip file you just downloaded
+-   Select the EclipseGraphviz feature from the Modeling category.
+-   Accept to restart Eclipse to make the changes effective.
+
+    
 ### Download and install Graphviz
 If you don't have it yet, download and install
 [Graphviz](http://graphviz.org/Download.php "http://graphviz.org/Download.php")

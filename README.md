@@ -39,7 +39,7 @@ client installed, that is the easiest way to install EclipseGraphviz. Just searc
 
 -   Accept to restart Eclipse to make the changes effective.
 
-#### Method 3: Manual download and install from local archived repository
+#### Method 3: Installation from local archived repository
 
 Some strict proxies may prevent applications (such as Eclipse) from downloading .zip files (such as the EclipseGraphviz repository). For example, if you consistently see the Eclipse Marketplace client (method 1) or Update Manager (method 2) failing with errors like these:
 ```

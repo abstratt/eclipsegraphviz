@@ -1,16 +1,26 @@
 package com.abstratt.pluginutils;
 
+import java.util.function.Supplier;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.osgi.framework.Bundle;
 
 public class LogUtils {
-    public static void log(int severity, String pluginId, String message, Throwable exception) {
-        log(new Status(severity, pluginId, message, exception));
+    public static void log(int severity, String pluginId, Supplier<String> message, Throwable exception) {
+        log(() -> new Status(severity, pluginId, message.get(), exception));
     }
 
+    public static void log(int severity, String pluginId, String message, Throwable exception) {
+        log(() -> new Status(severity, pluginId, message, exception));
+    }
+    
     public static void log(IStatus status) {
+        log(() -> status);
+    }
+    public static void log(Supplier<IStatus> statusSupplier) {
+        IStatus status = statusSupplier.get();
         if (!Platform.isRunning()) {
             System.err.println(status.getMessage());
             if (status.getException() != null)
@@ -38,14 +48,18 @@ public class LogUtils {
     public static void logWarning(String pluginId, String message, Throwable e) {
         log(IStatus.WARNING, pluginId, message, e);
     }
-
+    
     public static void logInfo(String pluginId, String message, Throwable e) {
         log(IStatus.INFO, pluginId, message, e);
     }
 
     public static void debug(String pluginId, String message) {
+        debug(pluginId, () -> message);
+    }
+    
+    public static void debug(String pluginId, Supplier<String> message) {
         if (Boolean.getBoolean(pluginId + ".debug"))
-            log(IStatus.INFO, pluginId, message, null);
+            log(IStatus.INFO, pluginId, message.get(), null);
     }
 
 }

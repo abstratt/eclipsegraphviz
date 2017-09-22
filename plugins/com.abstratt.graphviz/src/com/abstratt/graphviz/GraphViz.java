@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,28 +43,29 @@ import com.abstratt.pluginutils.LogUtils;
 public class GraphViz {
     private static final String DOT_EXTENSION = ".dot"; //$NON-NLS-1$
     private static final String TMP_FILE_PREFIX = "graphviz"; //$NON-NLS-1$
+    private static final int MAX_DOT_LENGTH_TO_LOG = 4 * 64 * 1024;
 
     public static void generate(final InputStream input, String format, int dimensionX, int dimensionY,
             IPath outputLocation) throws CoreException {
         MultiStatus status = new MultiStatus(GraphVizActivator.ID, 0, "Errors occurred while running Graphviz", null);
-        File dotInput = null, dotOutput = outputLocation.toFile();
+        File dotInputFile = null, dotOutputFile = outputLocation.toFile();
         // we keep the input in memory so we can include it in error messages
         ByteArrayOutputStream dotContents = new ByteArrayOutputStream();
         try {
             // determine the temp input location
-            dotInput = File.createTempFile(TMP_FILE_PREFIX, DOT_EXTENSION);
+            dotInputFile = File.createTempFile(TMP_FILE_PREFIX, DOT_EXTENSION);
             // dump the contents from the input stream into the temporary file
             // to be submitted to dot
             FileOutputStream tmpDotOutputStream = null;
             try {
                 IOUtils.copy(input, dotContents);
-                tmpDotOutputStream = new FileOutputStream(dotInput);
+                tmpDotOutputStream = new FileOutputStream(dotInputFile);
                 IOUtils.copy(new ByteArrayInputStream(dotContents.toByteArray()), tmpDotOutputStream);
             } finally {
                 IOUtils.closeQuietly(tmpDotOutputStream);
             }
-            IStatus result = runDot(format, dimensionX, dimensionY, dotInput, dotOutput);
-            if (dotOutput.isFile() && dotOutput.length() > 0) {
+            IStatus result = runDot(format, dimensionX, dimensionY, dotInputFile, dotOutputFile);
+            if (dotOutputFile.isFile() && dotOutputFile.length() > 0) {
                 if (!result.isOK() && Platform.inDebugMode())
                     LogUtils.log(status);
                 // success!
@@ -72,7 +74,7 @@ public class GraphViz {
         } catch (IOException e) {
             status.add(new Status(IStatus.ERROR, GraphVizActivator.ID, "", e));
         } finally {
-            dotInput.delete();
+            dotInputFile.delete();
             IOUtils.closeQuietly(input);
         }
         throw new CoreException(status);
@@ -88,42 +90,40 @@ public class GraphViz {
     public static byte[] load(final InputStream input, String format, int dimensionX, int dimensionY)
             throws CoreException {
         MultiStatus status = new MultiStatus(GraphVizActivator.ID, 0, "Errors occurred while running Graphviz", null);
-        File dotInput = null, dotOutput = null;
+        File dotInputFile = null, dotOutputFile = null;
         // we keep the input in memory so we can include it in error messages
         ByteArrayOutputStream dotContents = new ByteArrayOutputStream();
         try {
             // determine the temp input and output locations
-            dotInput = File.createTempFile(TMP_FILE_PREFIX, DOT_EXTENSION);
-            dotOutput = File.createTempFile(TMP_FILE_PREFIX, "." + format);
+            dotInputFile = File.createTempFile(TMP_FILE_PREFIX, DOT_EXTENSION);
+            dotOutputFile = File.createTempFile(TMP_FILE_PREFIX, "." + format);
             // we created the output file just so we would know an output
             // location to pass to dot
-            dotOutput.delete();
+            dotOutputFile.delete();
 
             // dump the contents from the input stream into the temporary file
             // to be submitted to dot
-            FileOutputStream tmpDotOutputStream = null;
-            try {
+            byte[] contentsAsArray = null;
+            try (FileOutputStream tmpDotOutputStream = new FileOutputStream(dotInputFile)) {
                 IOUtils.copy(input, dotContents);
-                tmpDotOutputStream = new FileOutputStream(dotInput);
-                IOUtils.copy(new ByteArrayInputStream(dotContents.toByteArray()), tmpDotOutputStream);
-            } finally {
-                IOUtils.closeQuietly(tmpDotOutputStream);
+                contentsAsArray = dotContents.toByteArray();
+                IOUtils.copy(new ByteArrayInputStream(contentsAsArray), tmpDotOutputStream);
             }
 
-            IStatus result = runDot(format, dimensionX, dimensionY, dotInput, dotOutput);
+            IStatus result = runDot(format, dimensionX, dimensionY, dotInputFile, dotOutputFile);
 
             status.add(result);
-            status.add(logInput(dotContents));
-            if (dotOutput.isFile()) {
+            status.add(logInput(contentsAsArray));
+            if (dotOutputFile.isFile()) {
                 if (!result.isOK() && Platform.inDebugMode())
                     LogUtils.log(status);
-                return FileUtils.readFileToByteArray(dotOutput);
+                return FileUtils.readFileToByteArray(dotOutputFile);
             }
         } catch (IOException e) {
             status.add(new Status(IStatus.ERROR, GraphVizActivator.ID, "", e));
         } finally {
-            dotInput.delete();
-            dotOutput.delete();
+            dotInputFile.delete();
+            dotOutputFile.delete();
             IOUtils.closeQuietly(input);
         }
         throw new CoreException(status);
@@ -143,8 +143,9 @@ public class GraphViz {
         return runDot(cmd.toArray(new String[cmd.size()]));
     }
 
-    private static IStatus logInput(ByteArrayOutputStream dotContents) {
-        return new Status(IStatus.INFO, GraphVizActivator.ID, "dot input was:\n" + dotContents, null);
+    private static IStatus logInput(byte[] dotContents) {
+        String dotInput = new String(dotContents, 0, Math.min(dotContents.length, MAX_DOT_LENGTH_TO_LOG), StandardCharsets.UTF_8);
+        return new Status(IStatus.INFO, GraphVizActivator.ID, "dot input was:\n" + dotInput, null);
     }
 
     /**
@@ -179,7 +180,7 @@ public class GraphViz {
 
         ByteArrayOutputStream errorOutput = new ByteArrayOutputStream();
         try {
-            final ProcessController controller = new ProcessController(60000, cmd.toArray(new String[cmd.size()]),
+            final ProcessController controller = new ProcessController(90000, cmd.toArray(new String[cmd.size()]),
                     null, dotFullPath.removeLastSegments(1).toFile());
             controller.forwardErrorOutput(errorOutput);
             controller.forwardOutput(System.out);

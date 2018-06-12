@@ -65,6 +65,7 @@ public class GraphViz {
                 IOUtils.closeQuietly(tmpDotOutputStream);
             }
             IStatus result = runDot(format, dimensionX, dimensionY, dotInputFile, dotOutputFile);
+            status.add(result);
             if (dotOutputFile.isFile() && dotOutputFile.length() > 0) {
                 if (!result.isOK() && Platform.inDebugMode())
                     LogUtils.log(status);

@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.UUID;
 
 /**
  * Executes an external process synchronously, allowing the client to define a
@@ -159,6 +160,8 @@ public class ProcessController {
         new Thread("Stream forwarder [" + name + "]") {
             @Override
             public void run() {
+            	String key = UUID.randomUUID().toString();
+            	System.out.println("Started " + getName() + " - " + key);
                 try {
                     while (!isFinished()) {
                         while (safeIsAvailable(in) > 0)
@@ -172,6 +175,8 @@ public class ProcessController {
                     GraphVizActivator.logUnexpected(null, e);
                 } catch (InterruptedException e) {
                     GraphVizActivator.logUnexpected(null, e);
+                } finally {
+                	System.out.println("Finished " + getName() + " - " + key);
                 }
             }
 

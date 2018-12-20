@@ -66,10 +66,13 @@ public class GraphViz {
             }
             IStatus result = runDot(format, dimensionX, dimensionY, dotInputFile, dotOutputFile);
             status.add(result);
+            System.out.println(dotContents.toString());
+            if (!result.isOK()) {
+            	LogUtils.debug(GraphVizActivator.ID, "A problem was detected, dumping DOT output to console");
+                System.out.println(dotContents.toString());
+            }
             if (dotOutputFile.isFile() && dotOutputFile.length() > 0) {
-                if (!result.isOK() && Platform.inDebugMode())
-                    LogUtils.log(status);
-                // success!
+                // success! (or kind of)
                 return;
             }
         } catch (IOException e) {

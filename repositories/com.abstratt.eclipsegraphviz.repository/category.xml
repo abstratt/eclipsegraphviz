@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/com.abstratt.eclipsegraphviz.feature_2.2.201709.qualifier.jar" id="com.abstratt.eclipsegraphviz.feature" version="2.2.201709.qualifier">
+   <feature url="features/com.abstratt.eclipsegraphviz.feature_2.3.201812.001.jar" id="com.abstratt.eclipsegraphviz.feature" version="2.3.201812.001">
       <category name="com.abstratt.mdd.category"/>
    </feature>
    <category-def name="com.abstratt.mdd.category" label="Modeling"/>

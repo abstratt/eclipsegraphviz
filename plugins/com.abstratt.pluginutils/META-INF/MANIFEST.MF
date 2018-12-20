@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Plug-in Utils
 Bundle-SymbolicName: com.abstratt.pluginutils
-Bundle-Version: 2.3.201812.002
+Bundle-Version: 2.4.201812.001
 Bundle-Vendor: Abstratt Technologies
 Require-Bundle: org.eclipse.core.runtime
 Export-Package: com.abstratt.pluginutils

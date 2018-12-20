@@ -12,6 +12,7 @@
 	</parent>
 	
 	<repositories>
+<!--
 		<repository>
 			<id>Abstratt-OSS</id>
 			<name>Abstratt OSS Repo</name>
@@ -21,7 +22,21 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-	</repositories>
+-->
+  <repository>
+    <id>abstratt-oss</id>
+    <url>https://packagecloud.io/abstratt/oss/maven2</url>
+    <releases>
+      <enabled>true</enabled>
+    </releases>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+  </repository>
+
+</repositories>
+
+
 
 	<modules>
 		<module>plugins/com.abstratt.pluginutils</module>
@@ -62,6 +77,13 @@
 				</configuration>
 			</plugin>  			
          </plugins>
+  <extensions>
+    <extension>
+      <groupId>io.packagecloud.maven.wagon</groupId>
+      <artifactId>maven-packagecloud-wagon</artifactId>
+      <version>0.0.4</version>
+    </extension>
+  </extensions>
        </build>
 </project>
 

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Graphviz Plug-in
 Bundle-SymbolicName: com.abstratt.graphviz;singleton:=true
-Bundle-Version: 2.4.201812.001
+Bundle-Version: 2.4.201812.003
 Bundle-Vendor: Abstratt Technologies (Eclipse integration)
 Bundle-Activator: com.abstratt.graphviz.GraphVizActivator
 Require-Bundle: org.eclipse.osgi,

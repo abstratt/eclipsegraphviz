@@ -62,4 +62,33 @@ public class LogUtils {
             log(IStatus.INFO, pluginId, message.get(), null);
     }
 
+    public static void logError(Class pluginClass, String message, Throwable e) {
+    	logError(pluginClass.getPackage().getName(), message, e);
+    }
+
+    public static void logWarning(Class pluginClass, String message, Throwable e) {
+    	logWarning(pluginClass.getPackage().getName(), message, e);
+    }
+    
+    public static void logInfo(Class pluginClass, String message, Throwable e) {
+        logInfo(pluginClass.getPackage().getName(), message, e);
+    }
+
+    public static void debug(Class pluginClass, String message) {
+        debug(pluginClass.getName(), () -> message);
+    }
+    
+    public static void debug(Class pluginClass, Supplier<String> message) {
+    	debug(pluginClass.getName(), message);
+    }    
+
+    public static void log(int severity, Class pluginClass, Supplier<String> message, Throwable exception) {
+        log(severity, pluginClass.getPackage().getName(), message, exception);
+    }
+
+    public static void log(int severity, Class pluginClass, String message, Throwable exception) {
+        log(severity, pluginClass.getPackage().getName(), message, exception);
+    }
+
+    
 }

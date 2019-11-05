@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Content Plug-in
 Bundle-SymbolicName: com.abstratt.content;singleton:=true
-Bundle-Version: 2.5.201812
+Bundle-Version: 2.6.201911.eclipsegraphviz
 Bundle-Vendor: Abstratt Technologies
 Require-Bundle: com.abstratt.pluginutils,
  org.eclipse.core.contenttype,

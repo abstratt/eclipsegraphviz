@@ -2,7 +2,7 @@
 <feature
       id="com.abstratt.eclipsegraphviz.feature"
       label="%featureName"
-      version="2.5.201812"
+      version="2.6.201911.eclipsegraphviz"
       provider-name="%providerName">
 
    <description>

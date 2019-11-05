@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Plug-in Utils
 Bundle-SymbolicName: com.abstratt.pluginutils
-Bundle-Version: 2.5.201812
+Bundle-Version: 2.6.201911.eclipsegraphviz
 Bundle-Vendor: Abstratt Technologies
 Require-Bundle: org.eclipse.core.runtime
 Export-Package: com.abstratt.pluginutils

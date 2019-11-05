@@ -27,6 +27,13 @@
 
 	</repositories>
 
+<distributionManagement>
+  <repository>
+      <id>bintray-abstratt-oss-abstratt-oss</id>
+      <url>https://api.bintray.com/maven/abstratt-oss/abstratt-oss/eclipsegraphviz/;publish=1;override=1</url>
+	  </repository>
+</distributionManagement>	
+
 	<modules>
 		<module>plugins/com.abstratt.pluginutils</module>
 		<module>plugins/com.abstratt.content</module>

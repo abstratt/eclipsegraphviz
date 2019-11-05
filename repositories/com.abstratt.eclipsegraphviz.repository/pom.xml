@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.abstratt.eclipsegraphviz</groupId>
 	<artifactId>com.abstratt.eclipsegraphviz.repository</artifactId>
-	<version>2.6.201911.eclipsegraphviz</version>
+	<version>2.7.201911</version>
 	<packaging>eclipse-repository</packaging>
 	<parent>
 		<artifactId>com.abstratt.eclipsegraphviz.parent</artifactId>
 		<groupId>com.abstratt.eclipsegraphviz</groupId>
-		<version>2.6.201911.eclipsegraphviz</version>
+		<version>2.7.201911</version>
 		<relativePath>../..</relativePath>
 	</parent>
 </project>

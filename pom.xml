@@ -8,8 +8,11 @@
 	<parent>
 		<artifactId>master</artifactId>
 		<groupId>com.abstratt</groupId>
-		<version>4.0</version>
+		<version>4.1</version>
 	</parent>
+	<properties>
+		<bintray.package>eclipsegraphviz</bintray.package>
+	</properties>
 	
 	<repositories>
 		<repository>
@@ -21,22 +24,8 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-<!--
-  <repository>
-    <id>abstratt-oss</id>
-    <url>https://packagecloud.io/abstratt/oss/maven2</url>
-    <releases>
-      <enabled>true</enabled>
-    </releases>
-    <snapshots>
-      <enabled>true</enabled>
-    </snapshots>
-  </repository>
--->
 
-</repositories>
-
-
+	</repositories>
 
 	<modules>
 		<module>plugins/com.abstratt.pluginutils</module>
@@ -77,13 +66,6 @@
 				</configuration>
 			</plugin>  			
          </plugins>
-  <extensions>
-    <extension>
-      <groupId>io.packagecloud.maven.wagon</groupId>
-      <artifactId>maven-packagecloud-wagon</artifactId>
-      <version>0.0.4</version>
-    </extension>
-  </extensions>
        </build>
 </project>
 

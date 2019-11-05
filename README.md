@@ -33,7 +33,7 @@ client installed, that is the easiest way to install EclipseGraphviz. Just searc
     JAR URL in the "Work with:" field (include jar: to the !/ at the
     end):
 
-<pre>jar:https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/4.0.0.201911-eclipsegraphviz/com.abstratt.eclipsegraphviz.repository-4.0.0.201911-eclipsegraphviz.zip!/</pre>
+<pre>jar:https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.7.201911/com.abstratt.eclipsegraphviz.repository-2.7.201911.zip!/</pre>
 
 -   Select the EclipseGraphviz feature from the Modeling category.
 

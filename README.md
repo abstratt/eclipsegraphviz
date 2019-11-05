@@ -33,7 +33,7 @@ client installed, that is the easiest way to install EclipseGraphviz. Just searc
     JAR URL in the "Work with:" field (include jar: to the !/ at the
     end):
 
-<pre>jar:https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.5.201812/com.abstratt.eclipsegraphviz.repository-2.5.201812.zip!/</pre>
+<pre>jar:https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/4.0.0.201911-eclipsegraphviz/com.abstratt.eclipsegraphviz.repository-4.0.0.201911-eclipsegraphviz.zip!/</pre>
 
 -   Select the EclipseGraphviz feature from the Modeling category.
 
@@ -43,7 +43,7 @@ client installed, that is the easiest way to install EclipseGraphviz. Just searc
 
 Some strict proxies may prevent applications (such as Eclipse) from downloading .zip files (such as the EclipseGraphviz repository). For example, if you consistently see the Eclipse Marketplace client (method 1) or Update Manager (method 2) failing with errors like these:
 ```
-Communication with repository at jar:https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.5.201812/com.abstratt.eclipsegraphviz.repository-2.5.201812.zip!/content.xml.xz failed.
+Communication with repository at jar:https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.6.201911.eclipsegraphviz/com.abstratt.eclipsegraphviz.repository-2.6.201911.eclipsegraphviz.zip!/content.xml.xz failed.
 root cause
 Caused by: java.net.SocketTimeoutException: Read timed out
 ```

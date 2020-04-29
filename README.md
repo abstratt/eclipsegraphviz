@@ -33,7 +33,7 @@ client installed, that is the easiest way to install EclipseGraphviz. Just searc
     JAR URL in the "Work with:" field (include jar: to the !/ at the
     end):
 
-<pre>jar:https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.7.201911/com.abstratt.eclipsegraphviz.repository-2.7.201911.zip!/</pre>
+<pre>jar:https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.8.202004/com.abstratt.eclipsegraphviz.repository-2.8.202004.zip!/</pre>
 
 -   Select the EclipseGraphviz feature from the Modeling category.
 
@@ -43,13 +43,13 @@ client installed, that is the easiest way to install EclipseGraphviz. Just searc
 
 Some strict proxies may prevent applications (such as Eclipse) from downloading .zip files (such as the EclipseGraphviz repository). For example, if you consistently see the Eclipse Marketplace client (method 1) or Update Manager (method 2) failing with errors like these:
 ```
-Communication with repository at jar:https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.7.201911/com.abstratt.eclipsegraphviz.repository-2.7.201911.zip!/content.xml.xz failed.
+Communication with repository at jar:https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.8.202004/com.abstratt.eclipsegraphviz.repository-2.8.202004.zip!/content.xml.xz failed.
 root cause
 Caused by: java.net.SocketTimeoutException: Read timed out
 ```
 you can use this workaround:
 
--   Download the EclipseGraphviz repository archive from [here](https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.7.201911/com.abstratt.eclipsegraphviz.repository-2.7.201911.zip/)
+-   Download the EclipseGraphviz repository archive from [here](https://dl.bintray.com/abstratt-oss/abstratt-oss/com/abstratt/eclipsegraphviz/com.abstratt.eclipsegraphviz.repository/2.8.202004/com.abstratt.eclipsegraphviz.repository-2.8.202004.zip/)
 -   Open the [Software
     Updates](http://help.eclipse.org/stable/topic/org.eclipse.platform.doc.user/tasks/tasks-121.htm "http://help.eclipse.org/stable/topic/org.eclipse.platform.doc.user/tasks/tasks-121.htm")
     dialog (Help \> Install New Software...), hit the Add... button, then use the "Archive..." button to find the zip file you just downloaded

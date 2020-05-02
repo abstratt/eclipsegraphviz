@@ -3,16 +3,21 @@ language: java
 jdk:
 - oraclejdk8
 install:
-  mvn clean install org.apache.maven.plugins:maven-deploy-plugin:2.8:deploy --settings deploy.settings.xml -DdeployAtEnd=true
+- mvn clean test
+deploy:
+  provider: script
+  script: mvn deploy -s deploy.settings.xml -Dmaven.test.skip=true -DdeployAtEnd=true
+  skip_cleanup: true
+  on:
+    tags: true
 notifications:
   email:
     on_success: change
     on_failure: change
-env:
-  global:
-  - secure: HwR6sIQdg/+mYnsXG1pvfyoIXIUVe+6T16fvjCm4lIAcUCofxgCt8C/rZduMzk4bCNnkGBuJ0XWAaRPGup9TvFF+fiYNgqfVAm/3LTvGodMW7G6Th3PwLyzHwpOdUEaIZEOFP1vUkrQhdPBiLz0F95gdQ/1WhK55W49/kSV+j8g=
-  - secure: C+xpd427Po1Z79Snt4gSOZYtXoRzhSlxnCG3cXeuqpEdXfdFMLXwQjHEMaMiHkSfgsMbXODNgEox2p+CIC6R15/xyafsAqCy9ryEXsCTpuFfF1oiBextbVeYG4gqtHr9TYNLBqAxEgQkY0XHnk3k0Y+/8MSt3+nPUsv5ee0YVOM=
-
 cache:
   directories:
-  - $HOME/.m2
+  - "$HOME/.m2"
+env:
+  global:
+  - secure: U/fHP5R/OuQ1fQCGd+uk7hTI/YSrtcG61yzg5MT6c+MoPiVScLeiLZv4uLZ/6ZpmrSt22LvgxNQv79UtQAxpF47D7MuDLnXHScnjqCCkKGgxr1MSaD0s4+y6nVOXDVGKCWJzOYWJnYxhChY6dbjjRdKQgyNI2BfOWcHn8tKGWs0=
+  - secure: cPf68inCG+pnmYpZk5QoqVjeMSdrEUlr5INlqQgbB8FxAd29pdJ5E2M+6xHTfnr7EVRXp/JUaFXwPOoAFaKL6OSlbpZT9LOkwQWHbi9sJ8gJOB58Rk6YieXKtmCFksv6eTuxU34GiYtGxxWS/+yr8VOzZrUnsAZqSwkEHZpOsSY=

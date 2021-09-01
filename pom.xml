@@ -15,7 +15,7 @@
 	
 	<repositories>
 		<repository>
-			<id>abstratt-oss</id>
+			<id>github</id>
 			<name>Abstratt OSS Repo</name>
 			<url>https://maven.pkg.github.com/abstratt/maven-releases/</url>
 			<layout>default</layout>

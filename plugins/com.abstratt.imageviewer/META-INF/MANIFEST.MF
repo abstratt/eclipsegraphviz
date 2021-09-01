@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Generic Image Viewer Plug-in
 Bundle-SymbolicName: com.abstratt.imageviewer;singleton:=true
-Bundle-Version: 2.9.1.qualifier
+Bundle-Version: 2.10.0
 Bundle-Activator: com.abstratt.imageviewer.Activator
 Bundle-Vendor: Abstratt Technologies
 Require-Bundle: org.eclipse.core.runtime,

@@ -22,4 +22,9 @@ jobs:
         java-version: '15'
         distribution: 'adopt'
     - name: Build with Maven
-      run: mvn -X -B package --file pom.xml
+      run: |
+        mkdir ~/.m2
+        echo "<settings><servers><server><id>github</id><username>abstratt</username><password>${GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
+        mvn -X -B package
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELENG_GITHUB_TOKEN }}        

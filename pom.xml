@@ -38,6 +38,7 @@
 		<module>plugins/com.abstratt.imageviewer</module>
 		<module>features/com.abstratt.eclipsegraphviz.feature</module>
 		<module>repositories/com.abstratt.eclipsegraphviz.repository</module>
+		<module>repositories/com.abstratt.eclipsegraphviz.p2site</module>
 	</modules>
 
         <build>
@@ -67,7 +68,7 @@
 						<targetFile>dependencies.target</targetFile>
 					</targetFiles>
 				</configuration>
-			</plugin>  			
+			</plugin> 			
          </plugins>
        </build>
 </project>

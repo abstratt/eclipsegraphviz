@@ -46,7 +46,7 @@ Caused by: java.net.SocketTimeoutException: Read timed out
 ```
 you can use this workaround:
 
--   Download the EclipseGraphviz repository archive from [here](https://abstratt.com/textuml/update/com.abstratt.mdd.oss.repository-2.13.0.zip!/)
+-   Download the EclipseGraphviz repository archive from [here](https://abstratt.com/textuml/update/com.abstratt.mdd.oss.repository-2.13.0.zip)
 -   Open the [Software
     Updates](http://help.eclipse.org/stable/topic/org.eclipse.platform.doc.user/tasks/tasks-121.htm "http://help.eclipse.org/stable/topic/org.eclipse.platform.doc.user/tasks/tasks-121.htm")
     dialog (Help \> Install New Software...), hit the Add... button, then use the "Archive..." button to find the zip file you just downloaded
